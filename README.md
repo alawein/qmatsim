@@ -165,7 +165,7 @@ If you use QMatSim in your research, please cite:
 }
 
 @software{alawein2025qmatsim,
-  author = {Dr. Meshal Alawein},
+  author = {Meshal Alawein},
   title = {QMatSim: Advanced Strain Engineering Framework for 2D Quantum Materials},
   url = {https://github.com/alaweimm90/QMatSim},
   year = {2025},
@@ -176,12 +176,12 @@ If you use QMatSim in your research, please cite:
 ## License
 
 This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.  
-© 2025 Dr. Meshal Alawein – All rights reserved.
+© 2025 Meshal Alawein – All rights reserved.
 
 ## Author
 
 <div align="center">
-<strong>Dr. Meshal Alawein</strong><br/>
+<strong>Meshal Alawein</strong><br/>
 <em>Computational Physicist & Research Scientist</em><br/>
 University of California, Berkeley
 

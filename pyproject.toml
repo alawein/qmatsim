@@ -9,10 +9,10 @@ description = "Advanced strain engineering framework for discovering flat bands 
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Dr. Meshal Alawein", email = "meshal@berkeley.edu"}
+    {name = "Meshal Alawein", email = "meshal@berkeley.edu"}
 ]
 maintainers = [
-    {name = "Dr. Meshal Alawein", email = "meshal@berkeley.edu"}
+    {name = "Meshal Alawein", email = "meshal@berkeley.edu"}
 ]
 keywords = ["strain-engineering", "flat-bands", "quantum-materials", "2d-materials", "dft", "siesta", "lammps", "tmdc", "lateral-heterostructures"]
 classifiers = [

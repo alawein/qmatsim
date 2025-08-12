@@ -26,7 +26,7 @@
 #   - Pseudopotential files in siesta/pseudopotentials/
 #   - Template files in siesta/io_templates/
 #
-# AUTHOR: Dr. Meshal Alawein (meshal@berkeley.edu)
+# AUTHOR: Meshal Alawein (meshal@berkeley.edu)
 # INSTITUTION: University of California, Berkeley
 
 set -e  # Exit on error
