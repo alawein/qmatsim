@@ -9,10 +9,10 @@ description = "Advanced strain engineering framework for discovering flat bands 
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Meshal Alawein", email = "meshal@berkeley.edu"}
+    {name = "Meshal Alawein", email = "contact@meshal.ai"}
 ]
 maintainers = [
-    {name = "Meshal Alawein", email = "meshal@berkeley.edu"}
+    {name = "Meshal Alawein", email = "contact@meshal.ai"}
 ]
 keywords = ["strain-engineering", "flat-bands", "quantum-materials", "2d-materials", "dft", "siesta", "lammps", "tmdc", "lateral-heterostructures"]
 classifiers = [
@@ -48,10 +48,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/alaweimm90/QMatSim"
-Repository = "https://github.com/alaweimm90/QMatSim"
-Documentation = "https://github.com/alaweimm90/QMatSim/docs"
-"Bug Tracker" = "https://github.com/alaweimm90/QMatSim/issues"
+Homepage = "https://github.com/alawein/qmatsim"
+Repository = "https://github.com/alawein/qmatsim"
+Documentation = "https://github.com/alawein/qmatsim/docs"
+"Bug Tracker" = "https://github.com/alawein/qmatsim/issues"
 
 [project.scripts]
 qmatsim = "qmatsim.__main__:main"

@@ -5,6 +5,8 @@ setup(
     version="0.1.0",
     description="Advanced strain engineering framework for 2D quantum materials",
     author="Meshal Alawein",
+    author_email="contact@meshal.ai",
+    url="https://github.com/alawein/qmatsim",
     packages=find_packages(),
     include_package_data=True,
     entry_points={

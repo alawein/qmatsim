@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-Please report security vulnerabilities to: 210013671+alaweimm90@users.noreply.github.com
+Please report security vulnerabilities to: contact@meshal.ai
 
 ## Supported Versions
 
