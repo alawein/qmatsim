@@ -52,3 +52,5 @@ metal dichalcogenides (MoS2, MoSe2, WS2, WSe2).
 - Functions: `snake_case`
 - Constants: `UPPER_SNAKE_CASE`
 - CLI commands: `kebab-case`
+
+See [CLAUDE.md](CLAUDE.md) | [SSOT.md](SSOT.md)
