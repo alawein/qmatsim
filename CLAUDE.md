@@ -1,3 +1,10 @@
+---
+type: guide
+authority: canonical
+audience: [ai-agents, contributors]
+last-verified: 2026-03-03
+---
+
 # Claude AI Assistant Guide
 
 ## Repository Context
@@ -57,3 +64,6 @@ qmatsim analyze --material MoS2 --structure 1x10_rectangular
 ## Architecture
 
 Multiscale simulation pipeline: Python CLI orchestrates DFT (SIESTA) and MD (LAMMPS) calculations with SLURM job management. The framework automates flat band discovery, strain-electronic correlation studies, and lateral heterostructure analysis across MoS2, MoSe2, WS2, and WSe2 systems.
+
+## Governance
+See [AGENTS.md](AGENTS.md) for rules. See [SSOT.md](SSOT.md) for current state.
