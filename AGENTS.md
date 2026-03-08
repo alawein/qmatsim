@@ -1,11 +1,11 @@
----
+﻿---
 type: normative
 authority: canonical
 audience: [agents, contributors, maintainers]
 last-verified: 2026-03-01
 ---
 
-# AGENTS -- qmatsim
+# AGENTS — qmatsim
 
 > Multiscale simulation framework for strain engineering in 2D materials.
 > Based on Alawein et al., Physical Review Materials 2025.
