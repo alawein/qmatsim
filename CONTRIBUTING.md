@@ -1,5 +1,7 @@
 # Contributing to QMatSim
 
+This project follows the [alawein org contributing standards](https://github.com/alawein/alawein/blob/main/CONTRIBUTING.md).
+
 ## Getting Started
 
 1. Fork the repository
