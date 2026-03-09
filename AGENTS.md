@@ -20,29 +20,34 @@ metal dichalcogenides (MoS2, MoSe2, WS2, WSe2).
 
 | Directory | Purpose |
 |-----------|---------|
-| `qmatsim/` | Core Python CLI framework |
-| `scripts/` | Bash automation for SLURM and workflow management |
-| `siesta/` | DFT calculation infrastructure |
-| `lammps/` | MD simulation infrastructure |
-| `tests/` | Test suite |
-| `docs/` | Documentation |
+| `qmatsim/` | Canonical Python package and CLI entrypoint |
+| `scripts/` | Bash and Python automation for setup, SLURM, and validation |
+| `siesta/` | DFT calculation infrastructure and templates |
+| `lammps/` | MD simulation infrastructure and assets |
+| `tests/` | CLI and package test suite |
+| `docs/` | Theory, API, development, and structure documentation |
 
 ## Commands
 
-- `pip install -e ".[dev]"` -- install with dev dependencies
-- `qmatsim --help` -- CLI usage
-- `pytest` -- run tests
-- `pytest --cov=qmatsim` -- run tests with coverage
+- `pip install -e ".[dev]"` — install with development dependencies
+- `python -m qmatsim --help` — CLI usage
+- `python scripts/validate-structure.py` — verify canonical repo layout
+- `python -m pytest -s tests/test_cli_basic.py tests/test_qmatsim_cli.py` — run
+  the current CLI smoke tests
 
 ## Agent Rules
 
 - Read this file before making changes
+- Keep the canonical Python import surface rooted at `qmatsim/`
+- Do not introduce a parallel `src/` tree without an explicit migration decision
 - Support both SIESTA and LAMMPS backends
-- Add tests for new features (`pytest`)
+- Keep domain assets under `siesta/` and `lammps/`; do not scatter them across
+  new root directories
+- Add tests for new features
 - Use `black` for formatting, `flake8` for linting, `mypy` for type checking
 - SLURM scripts must include proper resource management headers
-- Do not hardcode HPC paths -- use configuration files
-- Update documentation for API changes
+- Do not hardcode HPC paths; use configuration files and templates
+- Update documentation for API or workflow changes
 - Use conventional commit messages: `feat(scope):`, `fix(scope):`, etc.
 
 ## Naming Conventions

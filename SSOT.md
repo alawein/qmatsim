@@ -7,37 +7,44 @@ last-verified: 2026-03-09
 
 # SSOT — qmatsim
 
-**Version:** 1.0
-**Last Updated:** 2026-03-03
-**Status:** Active Research
-
----
+**Status:** Active research
 
 ## Purpose
 
-QMatSim — Multiscale simulation framework for strain engineering in 2D materials. Combines DFT (SIESTA) and MD (LAMMPS) to study flat bands, lateral heterostructures, and electronic phases in transition metal dichalcogenides. Implements Alawein et al., Physical Review Materials 2025.
+QMatSim is the canonical source for the multiscale strain-engineering framework
+that combines DFT (SIESTA) and MD (LAMMPS) workflows for 2D quantum materials.
 
 ## Current State
 
-- Python research library: Active
-- DFT/MD integration: Operational
-- Based on published research (Phys. Rev. Materials 2025)
+- Python research library and CLI: active
+- DFT and MD workflow assets: active
+- Published-method implementation: active
 
-## Structure
+## Canonical Layout
 
-```
-qmatsim/
-├── src/          # Python source
-├── CLAUDE.md     # Agent config
-├── AGENTS.md     # Governance rules
-└── SSOT.md       # This file
-```
+QMatSim uses a rooted Python package layout.
 
-## What's Next
+| Surface | Role |
+|---------|------|
+| `qmatsim/` | Canonical Python package and CLI module |
+| `scripts/` | Setup, SLURM, validation, and workflow automation |
+| `siesta/` | DFT templates, materials, and helper assets |
+| `lammps/` | MD inputs, data files, and potentials |
+| `docs/` | Theory, API, development, and architecture documentation |
+| `tests/` | CLI and package smoke tests |
 
-- See CLAUDE.md for development commands
+`src/` is not the canonical import boundary for this repository.
 
----
+See [docs/architecture/STRUCTURE_DECISION.md](docs/architecture/STRUCTURE_DECISION.md)
+for the explicit structure decision.
 
-_Governed by: [AGENTS.md](AGENTS.md)_
+## Governance Documents
+
+| Document | Purpose |
+|----------|---------|
+| [AGENTS.md](AGENTS.md) | Root contributor and agent rules |
+| [CLAUDE.md](CLAUDE.md) | Repo-specific engineering guidance |
+| [README.md](README.md) | User-facing overview and usage |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution workflow |
+
 See [CLAUDE.md](CLAUDE.md) | [AGENTS.md](AGENTS.md)
