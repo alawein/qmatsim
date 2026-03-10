@@ -5,7 +5,6 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import Optional
 
 # ---- Utilities ----
 def get_project_root() -> Path:
@@ -15,7 +14,7 @@ def validate_file_exists(file_path: Path, description: str) -> bool:
     """Check if required file exists and provide helpful error messages."""
     if not file_path.exists():
         print(f"❌ Missing {description}: {file_path}")
-        print(f"   Please ensure the file exists or check your project structure")
+        print("   Please ensure the file exists or check your project structure")
         return False
     return True
 
@@ -48,7 +47,7 @@ def run_script_safely(script_path: str, args: list, description: str) -> None:
                 print(result.stdout)
                 
     except FileNotFoundError:
-        print(f"❌ Error: bash command not found. Please ensure bash is installed.")
+        print("❌ Error: bash command not found. Please ensure bash is installed.")
         sys.exit(1)
     except Exception as e:
         print(f"❌ Unexpected error running {description}: {e}")
@@ -72,7 +71,7 @@ def run_md(args):
     # Validate data file exists
     data_file = project_root / f"lammps/data/{structure}.data"
     if not validate_file_exists(data_file, "LAMMPS data file"):
-        print(f"   Available data files:")
+        print("   Available data files:")
         data_dir = project_root / "lammps/data"
         if data_dir.exists():
             for f in data_dir.glob("*.data"):
@@ -95,7 +94,7 @@ def run_md(args):
         
         if missing:
             print(f"❌ Missing LAMMPS input files: {', '.join(missing)}")
-            print(f"   Please ensure these files exist in lammps/in/")
+            print("   Please ensure these files exist in lammps/in/")
             sys.exit(1)
             
         run_script_safely("scripts/run-MD.sh", [structure], "MD simulation suite")
