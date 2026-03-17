@@ -98,6 +98,7 @@ addopts = [
     "--strict-markers",
     "--strict-config",
     "--verbose",
+    "-p", "no:benchmark",
 ]
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
