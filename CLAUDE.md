@@ -6,6 +6,7 @@ last-verified: 2026-03-09
 ---
 
 # CLAUDE.md — qmatsim
+<!-- CUSTOM OVERRIDE: Multiscale simulation framework with DFT/MD domain constraints (SIESTA, LAMMPS, canonical root package structure) [Task 1.4 audit Batch 2] -->
 
 ## Repository Context
 

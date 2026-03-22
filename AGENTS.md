@@ -4,6 +4,7 @@ authority: canonical
 audience: [agents, contributors, maintainers]
 last-verified: 2026-03-09
 ---
+<!-- CUSTOM OVERRIDE: HPC/simulation framework rules (SIESTA DFT, LAMMPS MD, no parallel src/ tree, SLURM constraints) [Task 1.4 audit Batch 2] -->
 
 # AGENTS — qmatsim
 
