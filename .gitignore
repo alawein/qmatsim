@@ -116,3 +116,5 @@ calculations/
 results/
 output/
 scratch/
+# Ops reports (generated locally or in CI artifacts)
+reports/sync-report.*.json
