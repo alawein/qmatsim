@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # GGA Pseudopotentials
 
 This directory contains pseudopotentials for SIESTA calculations using the Generalized Gradient Approximation (GGA) exchange-correlation functional.

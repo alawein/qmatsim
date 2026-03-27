@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # LDA Pseudopotentials
 
 This directory contains pseudopotentials for SIESTA calculations using the Local Density Approximation (LDA) exchange-correlation functional.

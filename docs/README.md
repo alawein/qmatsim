@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # QMatSim Docs
 
 This directory holds the repo-local research and engineering references for

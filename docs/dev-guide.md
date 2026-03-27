@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Development Guide
 
 ## Project Overview

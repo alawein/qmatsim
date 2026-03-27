@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Cursor Rules for qmatsim
 
 You are working in qmatsim.
