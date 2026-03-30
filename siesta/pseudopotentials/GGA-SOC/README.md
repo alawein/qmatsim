@@ -1,3 +1,10 @@
+---
+type: derived
+source: ../../../README.md
+sync: manual
+sla: manual
+---
+
 # GGA-SOC Pseudopotentials
 
 This directory contains pseudopotentials for SIESTA calculations using the Generalized Gradient Approximation (GGA) with Spin-Orbit Coupling (SOC) effects included.
@@ -33,7 +40,7 @@ scripts/template-processor.sh create MoS2 Relaxation 0 ./soc_calculation
 
 ## Performance Notes
 
-  **Warning**: SOC calculations are significantly more expensive than scalar-relativistic calculations:
+ï¿½ **Warning**: SOC calculations are significantly more expensive than scalar-relativistic calculations:
 - 2-4x longer computation time
 - 2x memory usage
 - Complex wavefunctions (double storage)
@@ -43,7 +50,7 @@ scripts/template-processor.sh create MoS2 Relaxation 0 ./soc_calculation
 Particularly important for:
 - **MoS2, MoSe2**: Valence band splitting (~150 meV)
 - **WS2, WSe2**: Larger SOC effects (~400 meV) 
-- **Topological insulators**: Bi‚Seƒ, Bi‚Teƒ
+- **Topological insulators**: Biï¿½Seï¿½, Biï¿½Teï¿½
 - **Weyl semimetals**: TaAs, NbAs
 
 ## References
