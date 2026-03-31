@@ -119,3 +119,8 @@ python -m pytest -s tests/test_cli_basic.py tests/test_qmatsim_cli.py
 ## License
 
 MIT License. See [LICENSE](LICENSE).
+
+## Ownership
+
+- **Maintainer:** @alawein
+- **Support:** GitHub Issues on this repository
