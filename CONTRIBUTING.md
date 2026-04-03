@@ -1,54 +1,61 @@
 ---
 type: canonical
-source: none
-sync: none
+source: _devkit/templates
+sync: propagated
 sla: none
 ---
 
-# Contributing to QMatSim
+<!-- Token legend:
+     AUTO-SUBSTITUTED by sync-contributing.sh (derived from git remote):
+       qmatsim = GitHub slug used as heading (e.g. "bolts", "handshake-hai")
+       qmatsim      = GitHub slug used in URLs  (e.g. "bolts", "handshake-hai")
+     MANUALLY FILLED in Plan 2 per-repo pass:
+       {INSTALL_COMMAND}  = e.g. "npm ci" or "uv pip install -e ."
+       {TEST_COMMAND}     = e.g. "npm test" or "pytest"
+       {VALIDATE_COMMAND} = e.g. "npm run lint && npm test" or "ruff check . && pytest"
+-->
 
-This project follows the [alawein org contributing standards](https://github.com/alawein/alawein/blob/main/CONTRIBUTING.md)
-and the local repository rules in [AGENTS.md](AGENTS.md).
+# Contributing to qmatsim
 
-## Quick Start
+<!-- REPO-SPECIFIC: one-line context about what this repo is -->
+
+This project follows the [alawein org contributing standards](https://github.com/alawein/alawein/blob/main/CONTRIBUTING.md).
+
+## Getting Started
 
 ```bash
 git clone https://github.com/alawein/qmatsim.git
 cd qmatsim
-pip install -e ".[dev]"
-python scripts/validate-structure.py
-python -m qmatsim --help
+{INSTALL_COMMAND}
 ```
 
-## Workflow
+## Development Workflow
 
-1. Branch from `main`.
-2. Make the smallest coherent change.
-3. Update docs when workflow, structure, or CLI behavior changes.
-4. Run the repo validation commands before proposing the change.
+1. Branch off `main` using prefix: `feat/`, `fix/`, `docs/`, `chore/`, `test/`
+2. Make your changes — keep PRs focused on a single concern
+3. Run `{TEST_COMMAND}` to validate your changes before committing
+4. Commit using [Conventional Commits](https://www.conventionalcommits.org/) — `type(scope): subject`
+5. Open a Pull Request to `main`
 
-## Validation
+## Code Standards
 
-```bash
-python scripts/validate-structure.py
-python -m qmatsim --help
-python -m pytest -s tests/test_cli_basic.py tests/test_qmatsim_cli.py
-```
+<!-- REPO-SPECIFIC: 2-4 bullets about this repo's conventions -->
+- Follow existing patterns in the codebase
+- Run linting and type checks before committing
+- Write tests for new functionality
 
-## Structure Rules
+## Pull Request Checklist
 
-- Keep the canonical Python import surface at `qmatsim/`.
-- Keep DFT assets under `siesta/`.
-- Keep MD assets under `lammps/`.
-- Keep workflow automation under `scripts/`.
-- Do not introduce `src/` without an explicit migration decision and matching
-  documentation update.
+- [ ] CI passes (no failing checks)
+- [ ] Tests added or updated for new functionality
+- [ ] `{VALIDATE_COMMAND}` passes
+- [ ] `CHANGELOG.md` updated under `[Unreleased]`
+- [ ] No breaking changes without a version bump plan
 
-## Documentation
+## Reporting Issues
 
-See:
+Open an issue on the [GitHub repository](https://github.com/alawein/qmatsim/issues) with steps to reproduce and relevant context.
 
-- [README.md](README.md)
-- [SSOT.md](SSOT.md)
-- [docs/README.md](docs/README.md)
-- [docs/architecture/STRUCTURE_DECISION.md](docs/architecture/STRUCTURE_DECISION.md)
+## License
+
+By contributing, you agree that your contributions will be licensed under [MIT](LICENSE).
