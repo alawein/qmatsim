@@ -5,19 +5,9 @@ sync: propagated
 sla: none
 ---
 
-<!-- Token legend:
-     AUTO-SUBSTITUTED by sync-contributing.sh (derived from git remote):
-       qmatsim = GitHub slug used as heading (e.g. "bolts", "handshake-hai")
-       qmatsim      = GitHub slug used in URLs  (e.g. "bolts", "handshake-hai")
-     MANUALLY FILLED in Plan 2 per-repo pass:
-       {INSTALL_COMMAND}  = e.g. "npm ci" or "uv pip install -e ."
-       {TEST_COMMAND}     = e.g. "npm test" or "pytest"
-       {VALIDATE_COMMAND} = e.g. "npm run lint && npm test" or "ruff check . && pytest"
--->
-
 # Contributing to qmatsim
 
-<!-- REPO-SPECIFIC: one-line context about what this repo is -->
+Multiscale simulation framework for strain engineering in 2D materials.
 
 This project follows the [alawein org contributing standards](https://github.com/alawein/alawein/blob/main/CONTRIBUTING.md).
 
@@ -26,29 +16,29 @@ This project follows the [alawein org contributing standards](https://github.com
 ```bash
 git clone https://github.com/alawein/qmatsim.git
 cd qmatsim
-{INSTALL_COMMAND}
+pip install -e ".[dev]"
 ```
 
 ## Development Workflow
 
 1. Branch off `main` using prefix: `feat/`, `fix/`, `docs/`, `chore/`, `test/`
 2. Make your changes — keep PRs focused on a single concern
-3. Run `{TEST_COMMAND}` to validate your changes before committing
+3. Run `python -m pytest -s tests/` to validate your changes before committing
 4. Commit using [Conventional Commits](https://www.conventionalcommits.org/) — `type(scope): subject`
 5. Open a Pull Request to `main`
 
 ## Code Standards
 
-<!-- REPO-SPECIFIC: 2-4 bullets about this repo's conventions -->
-- Follow existing patterns in the codebase
-- Run linting and type checks before committing
-- Write tests for new functionality
+- Python 3.9+, black for formatting, flake8 + mypy for linting
+- Root package layout (`qmatsim/`), not `src/`
+- Keep SIESTA assets under `siesta/` and LAMMPS assets under `lammps/`
+- Never hardcode HPC paths -- use templates and config files
 
 ## Pull Request Checklist
 
 - [ ] CI passes (no failing checks)
 - [ ] Tests added or updated for new functionality
-- [ ] `{VALIDATE_COMMAND}` passes
+- [ ] `python scripts/validate-structure.py && python -m pytest -s tests/` passes
 - [ ] `CHANGELOG.md` updated under `[Unreleased]`
 - [ ] No breaking changes without a version bump plan
 

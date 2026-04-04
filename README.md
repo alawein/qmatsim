@@ -12,6 +12,8 @@ sla: none
 [![SIESTA](https://img.shields.io/badge/SIESTA-4.1+-green.svg)](https://siesta-project.org/siesta/)
 [![LAMMPS](https://img.shields.io/badge/LAMMPS-stable-red.svg)](https://www.lammps.org/)
 
+## About
+
 Multiscale simulation framework for strain engineering in 2D materials.
 QMatSim combines DFT (SIESTA) and MD (LAMMPS) calculations to study flat
 bands, lateral heterostructures, and electronic phases in transition metal
@@ -123,4 +125,4 @@ MIT License. See [LICENSE](LICENSE).
 ## Ownership
 
 - **Maintainer:** @alawein
-- **Support:** GitHub Issues on this repository
+- **Support:** [GitHub Issues](https://github.com/alawein/qmatsim/issues)

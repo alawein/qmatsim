@@ -87,3 +87,61 @@ def wse2_struct_file(tmp_path):
     f = tmp_path / "WSe2.STRUCT_IN"
     f.write_text(WSE2_STRUCT_IN)
     return f
+
+
+# ---------------------------------------------------------------------------
+# LAMMPS data file fixture (minimal 1x1 primitive MoS2)
+# ---------------------------------------------------------------------------
+
+LAMMPS_DATA_1X1 = """\
+# LAMMPS data file: 1x1 MoS2 primitive cell
+
+3 atoms
+2 atom types
+
+0.0 3.18 xlo xhi
+0.0 5.50 ylo yhi
+0.0 40.0 zlo zhi
+
+Masses
+
+1 95.94  # Mo
+2 32.065 # S
+
+Atoms  # atomic
+
+1 1 1.59 2.75 20.0       # Mo center
+2 2 1.59 2.75 21.6       # S top
+3 2 1.59 2.75 18.4       # S bottom
+"""
+
+
+@pytest.fixture
+def lammps_data_file(tmp_path):
+    """Minimal LAMMPS data file for 1x1 MoS2 primitive cell."""
+    f = tmp_path / "1x1_primitive.data"
+    f.write_text(LAMMPS_DATA_1X1)
+    return f
+
+
+# ---------------------------------------------------------------------------
+# Project-root fixture for tests that need to mock the repo tree
+# ---------------------------------------------------------------------------
+
+@pytest.fixture
+def mock_project_root(tmp_path):
+    """Create a minimal mock project root with scripts/ and lammps/ dirs."""
+    scripts_dir = tmp_path / "scripts"
+    scripts_dir.mkdir()
+    for script in ["run-DFT.sh", "run-MD.sh", "compress-MD.sh", "run-postprocessing.sh"]:
+        (scripts_dir / script).write_text("#!/bin/bash\ntrue")
+
+    lammps_data = tmp_path / "lammps" / "data"
+    lammps_data.mkdir(parents=True)
+
+    lammps_in = tmp_path / "lammps" / "in"
+    lammps_in.mkdir(parents=True)
+    for inp in ["compress_y.in", "deformation.in", "minimization.in"]:
+        (lammps_in / inp).write_text("# placeholder")
+
+    return tmp_path
