@@ -3,6 +3,7 @@
 Adds siesta/python-utilities to sys.path so tests can import convert, round,
 etc. directly by module name without any packaging changes.
 """
+
 import sys
 import pytest
 from pathlib import Path
@@ -128,12 +129,18 @@ def lammps_data_file(tmp_path):
 # Project-root fixture for tests that need to mock the repo tree
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture
 def mock_project_root(tmp_path):
     """Create a minimal mock project root with scripts/ and lammps/ dirs."""
     scripts_dir = tmp_path / "scripts"
     scripts_dir.mkdir()
-    for script in ["run-DFT.sh", "run-MD.sh", "compress-MD.sh", "run-postprocessing.sh"]:
+    for script in [
+        "run-DFT.sh",
+        "run-MD.sh",
+        "compress-MD.sh",
+        "run-postprocessing.sh",
+    ]:
         (scripts_dir / script).write_text("#!/bin/bash\ntrue")
 
     lammps_data = tmp_path / "lammps" / "data"

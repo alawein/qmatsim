@@ -3,6 +3,7 @@
 Tests exercise run_script_safely, run_dft, run_md, and run_post by mocking
 subprocess.run and filesystem access.  No real bash/SIESTA/LAMMPS calls.
 """
+
 import os
 import subprocess
 import sys
@@ -24,6 +25,7 @@ from qmatsim.__main__ import (
 # run_script_safely
 # ---------------------------------------------------------------------------
 
+
 class TestRunScriptSafely:
     """Tests for the generic bash-script runner."""
 
@@ -35,9 +37,7 @@ class TestRunScriptSafely:
         script_abs.parent.mkdir(parents=True, exist_ok=True)
         script_abs.write_text("#!/bin/bash\necho ok")
 
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
 
         completed = subprocess.CompletedProcess(
             args=["bash", script_rel], returncode=0, stdout="all good\n", stderr=""
@@ -56,13 +56,13 @@ class TestRunScriptSafely:
         script_abs.parent.mkdir(parents=True, exist_ok=True)
         script_abs.write_text("#!/bin/bash\nexit 42")
 
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
 
         completed = subprocess.CompletedProcess(
-            args=["bash", script_rel], returncode=42,
-            stdout="", stderr="boom\n",
+            args=["bash", script_rel],
+            returncode=42,
+            stdout="",
+            stderr="boom\n",
         )
         with patch("subprocess.run", return_value=completed):
             with pytest.raises(SystemExit) as exc:
@@ -71,9 +71,7 @@ class TestRunScriptSafely:
 
     def test_missing_script_exits(self, tmp_path, monkeypatch):
         """Missing script file triggers sys.exit(1)."""
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
         with pytest.raises(SystemExit) as exc:
             run_script_safely("scripts/nonexistent.sh", [], "Ghost script")
         assert exc.value.code == 1
@@ -85,9 +83,7 @@ class TestRunScriptSafely:
         script_abs.parent.mkdir(parents=True, exist_ok=True)
         script_abs.write_text("#!/bin/bash\ntrue")
 
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
 
         with patch("subprocess.run", side_effect=FileNotFoundError("bash")):
             with pytest.raises(SystemExit) as exc:
@@ -101,9 +97,7 @@ class TestRunScriptSafely:
         script_abs.parent.mkdir(parents=True, exist_ok=True)
         script_abs.write_text("")
 
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
 
         original_cwd = os.getcwd()
         completed = subprocess.CompletedProcess(
@@ -121,9 +115,7 @@ class TestRunScriptSafely:
         script_abs.parent.mkdir(parents=True, exist_ok=True)
         script_abs.write_text("")
 
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
 
         original_cwd = os.getcwd()
         completed = subprocess.CompletedProcess(
@@ -142,9 +134,7 @@ class TestRunScriptSafely:
         script_abs.parent.mkdir(parents=True, exist_ok=True)
         script_abs.write_text("")
 
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
 
         completed = subprocess.CompletedProcess(
             args=[], returncode=0, stdout="", stderr=""
@@ -160,6 +150,7 @@ class TestRunScriptSafely:
 # ---------------------------------------------------------------------------
 # run_dft
 # ---------------------------------------------------------------------------
+
 
 class TestRunDft:
     """Tests for the DFT workflow dispatcher."""
@@ -183,6 +174,7 @@ class TestRunDft:
 # run_post
 # ---------------------------------------------------------------------------
 
+
 class TestRunPost:
     """Tests for the postprocessing workflow dispatcher."""
 
@@ -205,6 +197,7 @@ class TestRunPost:
 # run_md
 # ---------------------------------------------------------------------------
 
+
 class TestRunMd:
     """Tests for the MD workflow dispatcher."""
 
@@ -216,9 +209,7 @@ class TestRunMd:
 
     def test_compress_mode_calls_compress_script(self, tmp_path, monkeypatch):
         """Mode 'compress' delegates to compress-MD.sh."""
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
         # Create the data file so validation passes
         data_dir = tmp_path / "lammps" / "data"
         data_dir.mkdir(parents=True)
@@ -239,9 +230,7 @@ class TestRunMd:
 
     def test_all_mode_calls_run_md_script(self, tmp_path, monkeypatch):
         """Mode 'all' delegates to run-MD.sh."""
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
         data_dir = tmp_path / "lammps" / "data"
         data_dir.mkdir(parents=True)
         (data_dir / "mystruc.data").write_text("fake")
@@ -261,9 +250,7 @@ class TestRunMd:
 
     def test_missing_data_file_exits(self, tmp_path, monkeypatch, capsys):
         """Missing LAMMPS data file triggers sys.exit(1)."""
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
         # Do NOT create the data file
         (tmp_path / "lammps" / "data").mkdir(parents=True)
 
@@ -272,11 +259,11 @@ class TestRunMd:
             run_md(args)
         assert exc.value.code == 1
 
-    def test_missing_input_files_for_all_mode_exits(self, tmp_path, monkeypatch, capsys):
+    def test_missing_input_files_for_all_mode_exits(
+        self, tmp_path, monkeypatch, capsys
+    ):
         """Mode 'all' exits when required LAMMPS input files are missing."""
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
         data_dir = tmp_path / "lammps" / "data"
         data_dir.mkdir(parents=True)
         (data_dir / "mystruc.data").write_text("fake")
@@ -291,9 +278,7 @@ class TestRunMd:
 
     def test_unknown_mode_exits(self, tmp_path, monkeypatch, capsys):
         """An unknown mode string triggers sys.exit(1)."""
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
         data_dir = tmp_path / "lammps" / "data"
         data_dir.mkdir(parents=True)
         (data_dir / "mystruc.data").write_text("fake")
@@ -305,9 +290,7 @@ class TestRunMd:
 
     def test_missing_compress_input_exits(self, tmp_path, monkeypatch):
         """Compress mode exits when compress_y.in is missing."""
-        monkeypatch.setattr(
-            "qmatsim.__main__.get_project_root", lambda: tmp_path
-        )
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
         data_dir = tmp_path / "lammps" / "data"
         data_dir.mkdir(parents=True)
         (data_dir / "mystruc.data").write_text("fake")

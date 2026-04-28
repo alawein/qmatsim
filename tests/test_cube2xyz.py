@@ -8,6 +8,7 @@ Instead, we test the core data-parsing logic by reimplementing the cube
 file reader as a standalone function and verifying it against known data.
 We also test the frange() generator used for plotting ranges.
 """
+
 import numpy as np
 import numpy.testing as npt
 import pytest
@@ -16,6 +17,7 @@ import pytest
 # ---------------------------------------------------------------------------
 # frange — reimplemented from cube2xyz.py for testing
 # ---------------------------------------------------------------------------
+
 
 def frange(x, y, jump):
     """Floating-point range generator (copied from cube2xyz.py)."""

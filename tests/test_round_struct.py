@@ -4,6 +4,7 @@ The function under test (process_struct_file) lives in
 siesta/python-utilities/round.py.  We redefine it here (copied verbatim)
 and test directly.  A source-fidelity test catches drift.
 """
+
 from pathlib import Path
 
 import numpy as np
@@ -14,6 +15,7 @@ import pytest
 # ---------------------------------------------------------------------------
 # Function copied from siesta/python-utilities/round.py
 # ---------------------------------------------------------------------------
+
 
 def process_struct_file(filename):
     with open(filename, "r") as f:
@@ -48,21 +50,20 @@ def process_struct_file(filename):
 # Source fidelity check
 # ---------------------------------------------------------------------------
 
+
 class TestSourceFidelity:
     """Verify our copy matches the original source file."""
 
     def test_source_contains_process_struct_file(self):
         src = (
-            Path(__file__).parent.parent
-            / "siesta" / "python-utilities" / "round.py"
+            Path(__file__).parent.parent / "siesta" / "python-utilities" / "round.py"
         ).read_text(encoding="utf-8")
         assert "def process_struct_file(filename):" in src
 
     def test_source_uses_3_decimal_format(self):
         """The source should use .3f formatting for rounding."""
         src = (
-            Path(__file__).parent.parent
-            / "siesta" / "python-utilities" / "round.py"
+            Path(__file__).parent.parent / "siesta" / "python-utilities" / "round.py"
         ).read_text(encoding="utf-8")
         assert ":.3f" in src
 
@@ -85,6 +86,7 @@ SAMPLE_STRUCT = """\
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
+
 
 class TestProcessStructFile:
     """Tests for the coordinate-rounding function."""

@@ -1,22 +1,21 @@
----
-type: derived
-source: ../README.md
-sync: manual
-sla: manual
----
+# Docs
 
-# QMatSim Docs
+This lane holds QMatSim's theory, CLI and package documentation, architecture
+decisions, and the operations notes for the simulation workflow.
 
-This directory holds the repo-local research and engineering references for
-QMatSim.
+## Start here
 
-## Guides
+- [theory.md](theory.md) for the scientific context.
+- [api.md](api.md) for the command and package surface.
+- [architecture.md](architecture.md) and `architecture/` for repository and
+  backend boundaries.
+- [dev-guide.md](dev-guide.md) for development assumptions and workflow rules.
+- [deployment.md](deployment.md) and `operations/` for runtime and release
+  procedures.
+- [troubleshooting.md](troubleshooting.md) for recurring failures.
+- [INDEX.md](INDEX.md) for the derived document map.
 
-- [api.md](./api.md) — API and command reference
-- [dev-guide.md](./dev-guide.md) — development notes
-- [theory.md](./theory.md) — theory and scientific context
+## Notes
 
-## Architecture
-
-- [STRUCTURE_DECISION.md](./architecture/STRUCTURE_DECISION.md) — canonical
-  rooted-package layout and repo boundary decision
+- Keep docs explicit about which backend, scheduler, or simulation surface a
+  workflow targets.

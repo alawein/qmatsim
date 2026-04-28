@@ -5,6 +5,7 @@ siesta/python-utilities/run.py.  We redefine the pure functions here
 (copied verbatim from the source) and test them directly.
 A source-fidelity test catches any drift between the copy and the original.
 """
+
 from pathlib import Path
 
 import numpy as np
@@ -68,7 +69,7 @@ def process_file(file_path, new_a11, new_a22):
         for i in range(4, 4 + num_atoms):
             elements = lines[i].split()
             if len(elements) != 5:
-                print(f"Warning: Skipping malformed line {i+1} in {file_path}")
+                print(f"Warning: Skipping malformed line {i + 1} in {file_path}")
                 continue
 
             atom_id = int(elements[0])
@@ -96,27 +97,28 @@ def process_file(file_path, new_a11, new_a22):
 # Source fidelity check
 # ---------------------------------------------------------------------------
 
+
 class TestSourceFidelity:
     """Verify our copies match the original source file."""
 
     def test_source_contains_transform_coordinates(self):
         src = (
-            Path(__file__).parent.parent
-            / "siesta" / "python-utilities" / "run.py"
+            Path(__file__).parent.parent / "siesta" / "python-utilities" / "run.py"
         ).read_text(encoding="utf-8")
-        assert "def transform_coordinates(old_a11, old_a22, new_a11, new_a22, old_a33, x, y, z):" in src
+        assert (
+            "def transform_coordinates(old_a11, old_a22, new_a11, new_a22, old_a33, x, y, z):"
+            in src
+        )
 
     def test_source_contains_process_file(self):
         src = (
-            Path(__file__).parent.parent
-            / "siesta" / "python-utilities" / "run.py"
+            Path(__file__).parent.parent / "siesta" / "python-utilities" / "run.py"
         ).read_text(encoding="utf-8")
         assert "def process_file(file_path, new_a11, new_a22):" in src
 
     def test_a_values_length_matches_source(self):
         src = (
-            Path(__file__).parent.parent
-            / "siesta" / "python-utilities" / "run.py"
+            Path(__file__).parent.parent / "siesta" / "python-utilities" / "run.py"
         ).read_text(encoding="utf-8")
         # Count tuples in source
         count = src.count("(3.3")
@@ -127,6 +129,7 @@ class TestSourceFidelity:
 # ---------------------------------------------------------------------------
 # a_values table
 # ---------------------------------------------------------------------------
+
 
 class TestAValuesTable:
     """Sanity checks on the hard-coded lattice parameter table."""
@@ -155,6 +158,7 @@ class TestAValuesTable:
 # transform_coordinates
 # ---------------------------------------------------------------------------
 
+
 class TestTransformCoordinatesRun:
     """Pure-function tests for in-plane coordinate rescaling."""
 
@@ -171,13 +175,17 @@ class TestTransformCoordinatesRun:
     def test_x_scales_with_a11(self):
         old_a11, new_a11 = 3.0, 6.0
         x_in = 0.4
-        x_out, _, _ = transform_coordinates(old_a11, 50.0, new_a11, 50.0, 23.0, x_in, 0.0, 0.0)
+        x_out, _, _ = transform_coordinates(
+            old_a11, 50.0, new_a11, 50.0, 23.0, x_in, 0.0, 0.0
+        )
         npt.assert_allclose(x_out, x_in * new_a11 / old_a11)
 
     def test_y_scales_with_a22(self):
         old_a22, new_a22 = 54.0, 27.0
         y_in = 0.6
-        _, y_out, _ = transform_coordinates(3.0, old_a22, 3.0, new_a22, 23.0, 0.0, y_in, 0.0)
+        _, y_out, _ = transform_coordinates(
+            3.0, old_a22, 3.0, new_a22, 23.0, 0.0, y_in, 0.0
+        )
         npt.assert_allclose(y_out, y_in * new_a22 / old_a22)
 
     def test_zero_coordinates_stay_zero(self):
