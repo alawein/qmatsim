@@ -4,6 +4,7 @@ The existing test_convert.py covers struct_to_poscar(); this file tests
 process_structure(), which coordinates file I/O around the converter.
 All file operations use tmp_path — no HPC paths are accessed.
 """
+
 import os
 from pathlib import Path
 
@@ -27,11 +28,23 @@ SAMPLE_STRUCT_IN = """\
 """
 
 
-def _build_struct_tree(base: Path, material: str, structure_type: str,
-                       cell_type: str, supercell: str, strain: int) -> Path:
+def _build_struct_tree(
+    base: Path,
+    material: str,
+    structure_type: str,
+    cell_type: str,
+    supercell: str,
+    strain: int,
+) -> Path:
     """Create the directory tree and STRUCT_IN file, return the Structure dir."""
     struct_dir = (
-        base / material / structure_type / cell_type / supercell / str(strain) / "Structure"
+        base
+        / material
+        / structure_type
+        / cell_type
+        / supercell
+        / str(strain)
+        / "Structure"
     )
     struct_dir.mkdir(parents=True, exist_ok=True)
     struct_file = struct_dir / f"{material}.STRUCT_IN"
@@ -43,6 +56,7 @@ def _build_struct_tree(base: Path, material: str, structure_type: str,
 # Tests
 # ---------------------------------------------------------------------------
 
+
 class TestProcessStructure:
     """Tests for the per-configuration converter."""
 
@@ -53,8 +67,14 @@ class TestProcessStructure:
         process_structure(str(tmp_path), "MoS2", "Monolayer", "rectangular", "1x10", 0)
 
         poscar = (
-            tmp_path / "MoS2" / "Monolayer" / "rectangular" / "1x10" / "0"
-            / "Structure" / "MoS2.POSCAR"
+            tmp_path
+            / "MoS2"
+            / "Monolayer"
+            / "rectangular"
+            / "1x10"
+            / "0"
+            / "Structure"
+            / "MoS2.POSCAR"
         )
         assert poscar.exists()
 
@@ -74,9 +94,7 @@ class TestProcessStructure:
     def test_missing_struct_file_prints_not_found(self, tmp_path, capsys):
         """When STRUCT_IN is absent, should print 'File not found'."""
         # Create the directory but NOT the STRUCT_IN file
-        struct_dir = (
-            tmp_path / "WS2" / "Bulk" / "primitive" / "1x1" / "0" / "Structure"
-        )
+        struct_dir = tmp_path / "WS2" / "Bulk" / "primitive" / "1x1" / "0" / "Structure"
         struct_dir.mkdir(parents=True, exist_ok=True)
 
         process_structure(str(tmp_path), "WS2", "Bulk", "primitive", "1x1", 0)
@@ -93,8 +111,14 @@ class TestProcessStructure:
             )
 
             poscar = (
-                tmp_path / material / "Monolayer" / "rectangular" / "1x1" / "0"
-                / "Structure" / f"{material}.POSCAR"
+                tmp_path
+                / material
+                / "Monolayer"
+                / "rectangular"
+                / "1x1"
+                / "0"
+                / "Structure"
+                / f"{material}.POSCAR"
             )
             assert poscar.exists(), f"POSCAR not created for {material}"
 
@@ -111,15 +135,19 @@ class TestProcessStructure:
     @pytest.mark.parametrize("strain", [0, 10, 20])
     def test_multiple_strain_values(self, tmp_path, strain):
         """Various strain percentages should all produce POSCAR files."""
-        _build_struct_tree(
-            tmp_path, "MoS2", "Monolayer", "rectangular", "1x10", strain
-        )
+        _build_struct_tree(tmp_path, "MoS2", "Monolayer", "rectangular", "1x10", strain)
         process_structure(
             str(tmp_path), "MoS2", "Monolayer", "rectangular", "1x10", strain
         )
 
         poscar = (
-            tmp_path / "MoS2" / "Monolayer" / "rectangular" / "1x10"
-            / str(strain) / "Structure" / "MoS2.POSCAR"
+            tmp_path
+            / "MoS2"
+            / "Monolayer"
+            / "rectangular"
+            / "1x10"
+            / str(strain)
+            / "Structure"
+            / "MoS2.POSCAR"
         )
         assert poscar.exists()

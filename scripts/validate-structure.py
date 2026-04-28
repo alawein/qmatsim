@@ -46,11 +46,20 @@ def main() -> int:
 
     main_source = (ROOT / "qmatsim" / "__main__.py").read_text(encoding="utf-8")
     if "scripts/run-DFT.sh" not in main_source:
-        failures.append("qmatsim/__main__.py: expected DFT workflow handoff to scripts/run-DFT.sh")
-    if "scripts/run-MD.sh" not in main_source and "scripts/compress-MD.sh" not in main_source:
-        failures.append("qmatsim/__main__.py: expected MD workflow handoff to scripts/run-MD.sh or scripts/compress-MD.sh")
+        failures.append(
+            "qmatsim/__main__.py: expected DFT workflow handoff to scripts/run-DFT.sh"
+        )
+    if (
+        "scripts/run-MD.sh" not in main_source
+        and "scripts/compress-MD.sh" not in main_source
+    ):
+        failures.append(
+            "qmatsim/__main__.py: expected MD workflow handoff to scripts/run-MD.sh or scripts/compress-MD.sh"
+        )
     if "scripts/run-postprocessing.sh" not in main_source:
-        failures.append("qmatsim/__main__.py: expected postprocessing handoff to scripts/run-postprocessing.sh")
+        failures.append(
+            "qmatsim/__main__.py: expected postprocessing handoff to scripts/run-postprocessing.sh"
+        )
 
     if failures:
         print("\n".join(failures))

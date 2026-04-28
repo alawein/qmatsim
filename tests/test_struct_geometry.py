@@ -4,6 +4,7 @@ Tests the structural properties of the TMD materials defined in conftest.py
 fixtures, verifying lattice parameters, atomic positions, and geometric
 relationships expected for monolayer transition metal dichalcogenides.
 """
+
 import numpy as np
 import numpy.testing as npt
 import pytest
@@ -12,6 +13,7 @@ import pytest
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def parse_struct_in(text):
     """Parse SIESTA STRUCT_IN format into structured data.
@@ -22,24 +24,28 @@ def parse_struct_in(text):
     """
     lines = [l for l in text.strip().split("\n") if l.strip()]
 
-    lattice = np.array([
-        [float(x) for x in lines[0].split()],
-        [float(x) for x in lines[1].split()],
-        [float(x) for x in lines[2].split()],
-    ])
+    lattice = np.array(
+        [
+            [float(x) for x in lines[0].split()],
+            [float(x) for x in lines[1].split()],
+            [float(x) for x in lines[2].split()],
+        ]
+    )
 
     num_atoms = int(lines[3].strip())
 
     atoms = []
-    for line in lines[4:4 + num_atoms]:
+    for line in lines[4 : 4 + num_atoms]:
         parts = line.split()
-        atoms.append({
-            "id": int(parts[0]),
-            "atomic_number": int(parts[1]),
-            "x": float(parts[2]),
-            "y": float(parts[3]),
-            "z": float(parts[4]),
-        })
+        atoms.append(
+            {
+                "id": int(parts[0]),
+                "atomic_number": int(parts[1]),
+                "x": float(parts[2]),
+                "y": float(parts[3]),
+                "z": float(parts[4]),
+            }
+        )
 
     return {"lattice_vectors": lattice, "num_atoms": num_atoms, "atoms": atoms}
 
@@ -70,6 +76,7 @@ NONMETAL_Z = {
 # Tests
 # ---------------------------------------------------------------------------
 
+
 class TestParseStructIn:
     """Tests for the STRUCT_IN parser itself."""
 
@@ -89,22 +96,30 @@ class TestParseStructIn:
 class TestLatticeParameters:
     """Verify in-plane lattice constants for all four TMDs."""
 
-    @pytest.mark.parametrize("fixture_name,material", [
-        ("mos2_struct_file", "MoS2"),
-        ("mose2_struct_file", "MoSe2"),
-        ("ws2_struct_file", "WS2"),
-        ("wse2_struct_file", "WSe2"),
-    ])
+    @pytest.mark.parametrize(
+        "fixture_name,material",
+        [
+            ("mos2_struct_file", "MoS2"),
+            ("mose2_struct_file", "MoSe2"),
+            ("ws2_struct_file", "WS2"),
+            ("wse2_struct_file", "WSe2"),
+        ],
+    )
     def test_a11_matches_expected(self, fixture_name, material, request):
         struct_file = request.getfixturevalue(fixture_name)
         data = parse_struct_in(struct_file.read_text())
         a11 = data["lattice_vectors"][0, 0]
         npt.assert_allclose(a11, EXPECTED_A[material], atol=0.001)
 
-    @pytest.mark.parametrize("fixture_name", [
-        "mos2_struct_file", "mose2_struct_file",
-        "ws2_struct_file", "wse2_struct_file",
-    ])
+    @pytest.mark.parametrize(
+        "fixture_name",
+        [
+            "mos2_struct_file",
+            "mose2_struct_file",
+            "ws2_struct_file",
+            "wse2_struct_file",
+        ],
+    )
     def test_vacuum_layer_height(self, fixture_name, request):
         """All fixtures should have a33 = 23.0 (vacuum slab)."""
         struct_file = request.getfixturevalue(fixture_name)
@@ -112,10 +127,15 @@ class TestLatticeParameters:
         a33 = data["lattice_vectors"][2, 2]
         npt.assert_allclose(a33, 23.0)
 
-    @pytest.mark.parametrize("fixture_name", [
-        "mos2_struct_file", "mose2_struct_file",
-        "ws2_struct_file", "wse2_struct_file",
-    ])
+    @pytest.mark.parametrize(
+        "fixture_name",
+        [
+            "mos2_struct_file",
+            "mose2_struct_file",
+            "ws2_struct_file",
+            "wse2_struct_file",
+        ],
+    )
     def test_hexagonal_lattice_angle(self, fixture_name, request):
         """Second lattice vector should be at 120 degrees (hexagonal)."""
         struct_file = request.getfixturevalue(fixture_name)
@@ -154,10 +174,15 @@ class TestAtomicPositions:
         assert z_nums.count(74) == 1  # W
         assert z_nums.count(34) == 2  # Se
 
-    @pytest.mark.parametrize("fixture_name", [
-        "mos2_struct_file", "mose2_struct_file",
-        "ws2_struct_file", "wse2_struct_file",
-    ])
+    @pytest.mark.parametrize(
+        "fixture_name",
+        [
+            "mos2_struct_file",
+            "mose2_struct_file",
+            "ws2_struct_file",
+            "wse2_struct_file",
+        ],
+    )
     def test_metal_at_midplane(self, fixture_name, request):
         """Metal atom should be at z = 0.5 (center of the slab)."""
         struct_file = request.getfixturevalue(fixture_name)
@@ -166,10 +191,15 @@ class TestAtomicPositions:
         for atom in metal_atoms:
             npt.assert_allclose(atom["z"], 0.5, atol=0.01)
 
-    @pytest.mark.parametrize("fixture_name", [
-        "mos2_struct_file", "mose2_struct_file",
-        "ws2_struct_file", "wse2_struct_file",
-    ])
+    @pytest.mark.parametrize(
+        "fixture_name",
+        [
+            "mos2_struct_file",
+            "mose2_struct_file",
+            "ws2_struct_file",
+            "wse2_struct_file",
+        ],
+    )
     def test_chalcogens_symmetric_about_metal(self, fixture_name, request):
         """Chalcogen atoms should be symmetrically placed around z = 0.5."""
         struct_file = request.getfixturevalue(fixture_name)
@@ -179,10 +209,15 @@ class TestAtomicPositions:
         # Should be symmetric: z[0] + z[1] = 1.0
         npt.assert_allclose(z_values[0] + z_values[1], 1.0, atol=0.01)
 
-    @pytest.mark.parametrize("fixture_name", [
-        "mos2_struct_file", "mose2_struct_file",
-        "ws2_struct_file", "wse2_struct_file",
-    ])
+    @pytest.mark.parametrize(
+        "fixture_name",
+        [
+            "mos2_struct_file",
+            "mose2_struct_file",
+            "ws2_struct_file",
+            "wse2_struct_file",
+        ],
+    )
     def test_atom_ids_sequential(self, fixture_name, request):
         """Atom IDs should be 1, 2, 3 in order."""
         struct_file = request.getfixturevalue(fixture_name)
@@ -190,10 +225,15 @@ class TestAtomicPositions:
         ids = [a["id"] for a in data["atoms"]]
         assert ids == [1, 2, 3]
 
-    @pytest.mark.parametrize("fixture_name", [
-        "mos2_struct_file", "mose2_struct_file",
-        "ws2_struct_file", "wse2_struct_file",
-    ])
+    @pytest.mark.parametrize(
+        "fixture_name",
+        [
+            "mos2_struct_file",
+            "mose2_struct_file",
+            "ws2_struct_file",
+            "wse2_struct_file",
+        ],
+    )
     def test_fractional_coords_in_unit_cell(self, fixture_name, request):
         """All fractional coordinates should be between 0 and 1."""
         struct_file = request.getfixturevalue(fixture_name)
@@ -207,10 +247,15 @@ class TestAtomicPositions:
 class TestLatticeVectorOrthogonality:
     """Verify expected orthogonality between lattice vectors."""
 
-    @pytest.mark.parametrize("fixture_name", [
-        "mos2_struct_file", "mose2_struct_file",
-        "ws2_struct_file", "wse2_struct_file",
-    ])
+    @pytest.mark.parametrize(
+        "fixture_name",
+        [
+            "mos2_struct_file",
+            "mose2_struct_file",
+            "ws2_struct_file",
+            "wse2_struct_file",
+        ],
+    )
     def test_a3_orthogonal_to_a1(self, fixture_name, request):
         """Out-of-plane vector a3 should be perpendicular to a1."""
         struct_file = request.getfixturevalue(fixture_name)
@@ -220,10 +265,15 @@ class TestLatticeVectorOrthogonality:
         dot = np.dot(a1, a3)
         npt.assert_allclose(dot, 0.0, atol=1e-10)
 
-    @pytest.mark.parametrize("fixture_name", [
-        "mos2_struct_file", "mose2_struct_file",
-        "ws2_struct_file", "wse2_struct_file",
-    ])
+    @pytest.mark.parametrize(
+        "fixture_name",
+        [
+            "mos2_struct_file",
+            "mose2_struct_file",
+            "ws2_struct_file",
+            "wse2_struct_file",
+        ],
+    )
     def test_a3_orthogonal_to_a2(self, fixture_name, request):
         """Out-of-plane vector a3 should be perpendicular to a2."""
         struct_file = request.getfixturevalue(fixture_name)

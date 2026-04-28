@@ -4,6 +4,7 @@ Tests run in-process (no subprocess) by patching sys.argv and sys.exit.
 This avoids the python3 / subprocess-hang issues that affect the existing
 smoke tests on Windows and makes the suite ~100x faster.
 """
+
 import sys
 import pytest
 from pathlib import Path
@@ -87,11 +88,17 @@ class TestArgParsing:
                 main()
 
     def test_minimize_invalid_mode_exits(self):
-        with patch("sys.argv", [
-            "qmatsim", "minimize",
-            "--structure", "1x10_rectangular",
-            "--mode", "explode",
-        ]):
+        with patch(
+            "sys.argv",
+            [
+                "qmatsim",
+                "minimize",
+                "--structure",
+                "1x10_rectangular",
+                "--mode",
+                "explode",
+            ],
+        ):
             with pytest.raises(SystemExit):
                 main()
 
@@ -106,11 +113,17 @@ class TestArgParsing:
         valid_modes = ["compress", "all"]
         for mode in valid_modes:
             with (
-                patch("sys.argv", [
-                    "qmatsim", "minimize",
-                    "--structure", "1x10_rectangular",
-                    "--mode", mode,
-                ]),
+                patch(
+                    "sys.argv",
+                    [
+                        "qmatsim",
+                        "minimize",
+                        "--structure",
+                        "1x10_rectangular",
+                        "--mode",
+                        mode,
+                    ],
+                ),
                 patch("qmatsim.__main__.run_script_safely"),
             ):
                 # argparse should NOT raise SystemExit for valid modes
@@ -122,7 +135,9 @@ class TestArgParsing:
     # --- analyze ---
 
     def test_analyze_missing_material_exits(self):
-        with patch("sys.argv", ["qmatsim", "analyze", "--structure", "1x10_rectangular"]):
+        with patch(
+            "sys.argv", ["qmatsim", "analyze", "--structure", "1x10_rectangular"]
+        ):
             with pytest.raises(SystemExit):
                 main()
 

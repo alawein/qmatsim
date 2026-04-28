@@ -7,6 +7,7 @@ functions here (copied verbatim from the source) and test them directly.
 Any drift between these copies and the source is caught by
 test_source_functions_match_reference() below.
 """
+
 from pathlib import Path
 
 import numpy as np
@@ -17,6 +18,7 @@ import pytest
 # ---------------------------------------------------------------------------
 # Functions copied from siesta/python-utilities/change-a33.py
 # ---------------------------------------------------------------------------
+
 
 def transform_coordinates(old_a33, new_a33, x, y, z):
     """Transform the z-coordinate based on the new lattice vector."""
@@ -61,20 +63,25 @@ def process_file(file_path, new_a33):
 # Source fidelity check
 # ---------------------------------------------------------------------------
 
+
 class TestSourceFidelity:
     """Verify our copies match the original source file."""
 
     def test_source_contains_transform_coordinates(self):
         src = (
             Path(__file__).parent.parent
-            / "siesta" / "python-utilities" / "change-a33.py"
+            / "siesta"
+            / "python-utilities"
+            / "change-a33.py"
         ).read_text(encoding="utf-8")
         assert "def transform_coordinates(old_a33, new_a33, x, y, z):" in src
 
     def test_source_contains_process_file(self):
         src = (
             Path(__file__).parent.parent
-            / "siesta" / "python-utilities" / "change-a33.py"
+            / "siesta"
+            / "python-utilities"
+            / "change-a33.py"
         ).read_text(encoding="utf-8")
         assert "def process_file(file_path, new_a33):" in src
 
@@ -82,7 +89,9 @@ class TestSourceFidelity:
         """The core formula z * old_a33 / new_a33 should be in the source."""
         src = (
             Path(__file__).parent.parent
-            / "siesta" / "python-utilities" / "change-a33.py"
+            / "siesta"
+            / "python-utilities"
+            / "change-a33.py"
         ).read_text(encoding="utf-8")
         assert "z * old_a33 / new_a33" in src
 
@@ -90,6 +99,7 @@ class TestSourceFidelity:
 # ---------------------------------------------------------------------------
 # transform_coordinates
 # ---------------------------------------------------------------------------
+
 
 class TestTransformCoordinates:
     """Pure-function tests for z-coordinate rescaling."""

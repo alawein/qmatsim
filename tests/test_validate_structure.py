@@ -8,6 +8,7 @@ The validator is imported as a module using the conftest sys.path setup
 is not needed here — we import it directly via runpy or by adding scripts/
 to the path.
 """
+
 import sys
 from pathlib import Path
 from unittest.mock import patch
@@ -18,6 +19,7 @@ import pytest
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _run_validator(project_root: Path) -> int:
     """Run the validator's main() with a patched ROOT, return exit code."""
@@ -30,6 +32,7 @@ def _run_validator(project_root: Path) -> int:
     mod_name = "validate-structure"
     # Can't import hyphenated names directly; use importlib
     import importlib.util
+
     spec = importlib.util.spec_from_file_location(
         "validate_structure",
         Path(__file__).parent.parent / "scripts" / "validate-structure.py",
@@ -37,7 +40,9 @@ def _run_validator(project_root: Path) -> int:
     mod = importlib.util.module_from_spec(spec)
 
     # Patch ROOT before exec_module so the module sees our tmp_path
-    with patch.object(mod, "__file__", str(project_root / "scripts" / "validate-structure.py")):
+    with patch.object(
+        mod, "__file__", str(project_root / "scripts" / "validate-structure.py")
+    ):
         # We need to patch at the source level
         pass
 
@@ -90,6 +95,7 @@ def _validate(root: Path) -> list:
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
+
 
 class TestValidateStructureLogic:
     """Tests for the structure validation logic."""

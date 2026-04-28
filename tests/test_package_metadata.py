@@ -3,6 +3,7 @@
 Verifies __version__, __author__, pyproject.toml consistency, and that
 the package is properly structured for import.
 """
+
 from pathlib import Path
 
 import pytest
@@ -30,11 +31,13 @@ class TestPackageMetadata:
     def test_package_is_importable(self):
         """The package should import without error."""
         import qmatsim
+
         assert qmatsim is not None
 
     def test_main_module_importable(self):
         """qmatsim.__main__ should be importable."""
         from qmatsim import __main__
+
         assert hasattr(__main__, "main")
 
 
@@ -68,7 +71,7 @@ class TestPyprojectToml:
         assert "matplotlib" in pyproject_text
 
     def test_python_requires_39(self, pyproject_text):
-        assert '>=3.9' in pyproject_text
+        assert ">=3.9" in pyproject_text
 
     def test_entry_point_defined(self, pyproject_text):
         assert 'qmatsim = "qmatsim.__main__:main"' in pyproject_text

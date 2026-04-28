@@ -5,6 +5,7 @@ test the path-construction and material-supercell mapping logic by reading
 the script as text and verifying its structural properties.  This avoids
 executing any code from the script itself.
 """
+
 import os
 from pathlib import Path
 
@@ -12,10 +13,7 @@ import pytest
 
 
 MOVE_SCRIPT = (
-    Path(__file__).parent.parent
-    / "siesta"
-    / "python-utilities"
-    / "move.py"
+    Path(__file__).parent.parent / "siesta" / "python-utilities" / "move.py"
 ).read_text(encoding="utf-8")
 
 
@@ -51,11 +49,14 @@ class TestMovePathConstruction:
     def base_path(self):
         return "/global/home/users/meshal/SIESTA/materials"
 
-    @pytest.mark.parametrize("material,supercell,strain", [
-        ("MoS2", "1x10", 0),
-        ("MoS2", "1x30", 20),
-        ("WS2", "1x20", 10),
-    ])
+    @pytest.mark.parametrize(
+        "material,supercell,strain",
+        [
+            ("MoS2", "1x10", 0),
+            ("MoS2", "1x30", 20),
+            ("WS2", "1x20", 10),
+        ],
+    )
     def test_source_target_paths_differ_by_structure_dir(
         self, base_path, material, supercell, strain
     ):
@@ -69,7 +70,9 @@ class TestMovePathConstruction:
 
     def test_source_and_target_share_same_filename(self, base_path):
         material = "MoSe2"
-        source = f"{base_path}/{material}/Monolayer/rectangular/1x10/5/{material}.POSCAR"
+        source = (
+            f"{base_path}/{material}/Monolayer/rectangular/1x10/5/{material}.POSCAR"
+        )
         target = f"{base_path}/{material}/Monolayer/rectangular/1x10/5/Structure/{material}.POSCAR"
 
         assert os.path.basename(source) == os.path.basename(target)
