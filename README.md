@@ -1,5 +1,12 @@
 # QMatSim
 
+Status:      frozen
+Category:    research
+Owner:       alawein
+Visibility:  public
+Purpose:     Quantum material simulation research workspace.
+Next action: continue
+
 QMatSim is a strain-engineering workflow for 2D quantum materials built around
 two explicit computational surfaces: SIESTA for DFT and LAMMPS for molecular
 dynamics. The Python package is the orchestration layer. It is not pretending
@@ -8,6 +15,14 @@ to replace the underlying solvers.
 The repository is organized to keep templates, materials, scheduler scripts,
 and analysis commands close to the scientific problem instead of hiding them
 behind a generic application shell.
+
+## Public value
+
+QMatSim is a strong research-portfolio candidate because it connects a clear
+scientific workflow to explicit solver boundaries, templates, CLI commands, and
+analysis surfaces. Public polish should emphasize reproducibility, solver
+requirements, data provenance, and example outputs rather than abstracting away
+the DFT/MD tooling.
 
 ## Core surfaces
 
@@ -45,6 +60,13 @@ flake8 qmatsim/
 mypy qmatsim/
 python scripts/validate-structure.py
 ```
+
+## Data and solver boundaries
+
+SIESTA and LAMMPS remain external scientific dependencies. Keep private cluster
+paths, scheduler credentials, unpublished datasets, and machine-local outputs
+out of committed examples. Public examples should identify input provenance and
+whether outputs are generated, archived, or illustrative.
 
 ## Documentation
 
