@@ -22,7 +22,7 @@ def parse_struct_in(text):
         dict with keys: lattice_vectors (3x3 array), num_atoms (int),
         atoms (list of dicts with id, atomic_number, x, y, z).
     """
-    lines = [l for l in text.strip().split("\n") if l.strip()]
+    lines = [line for line in text.strip().split("\n") if line.strip()]
 
     lattice = np.array(
         [

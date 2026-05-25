@@ -7,9 +7,7 @@ and test directly.  A source-fidelity test catches drift.
 
 from pathlib import Path
 
-import numpy as np
 import numpy.testing as npt
-import pytest
 
 
 # ---------------------------------------------------------------------------
@@ -132,7 +130,7 @@ class TestProcessStructFile:
 
         process_struct_file(str(f))
 
-        lines = [l for l in f.read_text().splitlines() if l.strip()]
+        lines = [line for line in f.read_text().splitlines() if line.strip()]
         assert len(lines) == 7  # 3 lattice + 1 count + 3 atoms
 
     def test_type_prefix_preserved(self, tmp_path):
@@ -165,7 +163,7 @@ class TestProcessStructFile:
 
         process_struct_file(str(f))
 
-        lines = [l for l in f.read_text().splitlines() if l.strip()]
+        lines = [line for line in f.read_text().splitlines() if line.strip()]
         assert len(lines) == 7
 
     def test_idempotent(self, tmp_path):

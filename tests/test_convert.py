@@ -5,7 +5,6 @@ VASP POSCAR format.  The function is pure (read file → return string) so
 every test below uses only tmp_path fixtures — no mocks, no subprocess.
 """
 
-import pytest
 from convert import struct_to_poscar
 
 
@@ -64,8 +63,8 @@ class TestMaterialSpeciesAssignment:
         # This distinguishes it from the title "MoS2 structure" which contains digits.
         label_idx = next(
             i
-            for i, l in enumerate(lines)
-            if len(l.split()) == 2 and all(p.isalpha() for p in l.split())
+            for i, line in enumerate(lines)
+            if len(line.split()) == 2 and all(p.isalpha() for p in line.split())
         )
         assert lines[label_idx].split()[0] == "Mo"
 
@@ -105,8 +104,8 @@ class TestAtomCoordinateOrdering:
 
     def _coord_lines_after_direct(self, poscar: str) -> list:
         lines = poscar.splitlines()
-        idx = next(i for i, l in enumerate(lines) if l.strip() == "Direct")
-        return [l for l in lines[idx + 1 :] if l.strip()]
+        idx = next(i for i, line in enumerate(lines) if line.strip() == "Direct")
+        return [line for line in lines[idx + 1 :] if line.strip()]
 
     def test_mos2_metal_first_z_near_half(self, mos2_struct_file):
         """Mo sits at z≈0.5 (mid-layer); S atoms at z≈0.38 and z≈0.62."""

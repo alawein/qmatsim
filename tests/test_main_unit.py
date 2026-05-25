@@ -5,7 +5,6 @@ This avoids the python3 / subprocess-hang issues that affect the existing
 smoke tests on Windows and makes the suite ~100x faster.
 """
 
-import sys
 import pytest
 from pathlib import Path
 from unittest.mock import patch
