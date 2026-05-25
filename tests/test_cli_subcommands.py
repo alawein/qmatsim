@@ -5,12 +5,11 @@ default values, argument combinations, help text, and func binding.
 All tests run in-process by patching sys.argv — no subprocess calls.
 """
 
-import sys
 from unittest.mock import patch, MagicMock
 
 import pytest
 
-from qmatsim.__main__ import main, run_dft, run_md, run_post
+from qmatsim.__main__ import main
 
 
 # ---------------------------------------------------------------------------

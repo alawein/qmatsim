@@ -6,14 +6,11 @@ subprocess.run and filesystem access.  No real bash/SIESTA/LAMMPS calls.
 
 import os
 import subprocess
-import sys
-from pathlib import Path
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 from qmatsim.__main__ import (
-    get_project_root,
     run_script_safely,
     run_dft,
     run_md,

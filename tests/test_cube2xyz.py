@@ -9,9 +9,7 @@ file reader as a standalone function and verifying it against known data.
 We also test the frange() generator used for plotting ranges.
 """
 
-import numpy as np
 import numpy.testing as npt
-import pytest
 
 
 # ---------------------------------------------------------------------------

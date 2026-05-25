@@ -5,7 +5,6 @@ process_structure(), which coordinates file I/O around the converter.
 All file operations use tmp_path — no HPC paths are accessed.
 """
 
-import os
 from pathlib import Path
 
 import pytest

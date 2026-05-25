@@ -13,7 +13,6 @@ import sys
 from pathlib import Path
 from unittest.mock import patch
 
-import pytest
 
 
 # ---------------------------------------------------------------------------
@@ -28,8 +27,6 @@ def _run_validator(project_root: Path) -> int:
     if scripts_dir not in sys.path:
         sys.path.insert(0, scripts_dir)
 
-    # Remove cached module to force reimport with new ROOT
-    mod_name = "validate-structure"
     # Can't import hyphenated names directly; use importlib
     import importlib.util
 

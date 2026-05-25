@@ -8,9 +8,7 @@ A source-fidelity test catches any drift between the copy and the original.
 
 from pathlib import Path
 
-import numpy as np
 import numpy.testing as npt
-import pytest
 
 
 # ---------------------------------------------------------------------------

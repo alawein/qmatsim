@@ -10,9 +10,7 @@ test_source_functions_match_reference() below.
 
 from pathlib import Path
 
-import numpy as np
 import numpy.testing as npt
-import pytest
 
 
 # ---------------------------------------------------------------------------
@@ -227,7 +225,7 @@ class TestProcessFile:
 
         process_file(str(f), 90.0)
 
-        lines = [l for l in f.read_text().splitlines() if l.strip()]
+        lines = [line for line in f.read_text().splitlines() if line.strip()]
         assert len(lines) == 7  # 3 lattice + 1 count + 3 atoms
 
     def test_atom_ids_preserved(self, tmp_path):
