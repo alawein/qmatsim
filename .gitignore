@@ -132,3 +132,13 @@ playwright-report/
 test-results/
 coverage/
 *.log
+
+# Credentials / secrets (security hardening)
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.keystore
+id_rsa*
+.claude.json
