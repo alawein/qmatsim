@@ -59,8 +59,9 @@ python -m pytest -s tests/test_cli_basic.py tests/test_qmatsim_cli.py
 ```
 
 Keep private cluster paths, scheduler credentials, and machine-local outputs out
-of committed examples. See [docs/architecture.md](docs/architecture.md) for
-solver boundaries and package layout.
+of committed examples. See [docs/architecture/topology.md](docs/architecture/topology.md)
+for on-disk layout and role boundaries, and
+[docs/architecture.md](docs/architecture.md) for solver boundaries and package layout.
 
 ## Datasets
 
@@ -73,4 +74,5 @@ solver boundaries and package layout.
 - [docs/README.md](docs/README.md)
 - [SSOT.md](SSOT.md)
 - [LESSONS.md](LESSONS.md)
+- [docs/architecture/topology.md](docs/architecture/topology.md)
 - [docs/architecture.md](docs/architecture.md)
