@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "QMatSim: Quantum Materials Simulation Toolkit"
+authors:
+  - family-names: "Alawein"
+    given-names: "Meshal"
+    email: "contact@meshal.ai"
+repository-code: "https://github.com/alawein/qmatsim"
+keywords:
+  - "strain engineering"
+  - "quantum materials"
+  - "2D materials"
+  - "DFT"
+  - "SIESTA"
+  - "molecular dynamics"
+  - "LAMMPS"
+license: MIT
+version: "0.1.0"
+date-released: "2026-08-28"
+references:
+  - type: article
+    title: "Alawein et al., Phys. Rev. Materials 2025"
+    authors:
+      - family-names: "Alawein"
+        given-names: "Meshal"
+    journal: "Physical Review Materials"
+    year: 2025
