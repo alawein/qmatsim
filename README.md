@@ -1,7 +1,7 @@
 # QMatSim
 
 Status:      frozen
-Category:    research
+Category:    lab
 Owner:       alawein
 Visibility:  public
 Purpose:     Quantum material simulation research workspace.
@@ -9,27 +9,53 @@ Next action: continue
 
 ## Abstract
 
-QMatSim is a strain-engineering workflow for 2D quantum materials built around
-two explicit computational surfaces: SIESTA for DFT and LAMMPS for molecular
-dynamics. The Python package is the orchestration layer; it does not replace the
-underlying solvers. Public polish should emphasize reproducibility, solver
-requirements, data provenance, and example outputs rather than abstracting away
-the DFT/MD tooling.
+QMatSim orchestrates strain-engineering simulations for 2D quantum materials: a
+Python CLI drives SIESTA for DFT and LAMMPS for molecular dynamics from one set
+of commands. It is for researchers who already run DFT/MD pipelines by hand and
+want a single reproducible entry point instead of separate per-project scripts
+for each solver.
+
+It does not implement DFT or MD itself; it depends on SIESTA and LAMMPS and
+orchestrates their inputs, execution, and postprocessing.
 
 ## Status
 
-- Lifecycle: `frozen`
-- Category: `research`
-- Owner: `alawein`
-- Visibility: `public`
-- Next action: `continue`
+- Lifecycle: frozen
+- Verification date: 2026-08-28
+- Scope: Python package under `qmatsim/`, SIESTA/LAMMPS templates under
+  `siesta/` and `lammps/`, and cluster scripts under `scripts/`
 
 ## Runtime requirements
 
-- Python 3.x with `pip install -e ".[dev]"`
+- Python 3.9+ with `pip install -e ".[dev]"`
 - External scientific dependencies: SIESTA (DFT) and LAMMPS (MD)
 - SLURM scheduler scripts in `scripts/` for cluster workflows
 - Validation: `python scripts/validate-structure.py`
+
+## Reproducibility
+
+```bash
+python scripts/validate-structure.py
+python -m pytest tests/test_cli_basic.py tests/test_qmatsim_cli.py -q
+```
+
+Requires SIESTA and LAMMPS on PATH; not run in CI.
+
+```bash
+qmatsim relax --material MoS2 --structure 1x10_rectangular
+qmatsim minimize --structure 1x10_rectangular --mode compress
+qmatsim analyze --material MoS2 --structure 1x10_rectangular
+```
+
+Committed examples exclude private cluster paths, scheduler credentials, and
+machine-local outputs.
+
+## Datasets
+
+- Material definitions and templates in `siesta/` and `lammps/`
+- No unpublished cluster datasets in the repo
+
+## Architecture
 
 ```text
 qmatsim/
@@ -46,28 +72,9 @@ qmatsim/
 └── pyproject.toml
 ```
 
-## Reproducibility
-
-```bash
-pip install -e ".[dev]"
-python scripts/validate-structure.py
-python -m qmatsim --help
-qmatsim relax --material MoS2 --structure 1x10_rectangular
-qmatsim minimize --structure 1x10_rectangular --mode compress
-qmatsim analyze --material MoS2 --structure 1x10_rectangular
-python -m pytest -s tests/test_cli_basic.py tests/test_qmatsim_cli.py
-```
-
-Keep private cluster paths, scheduler credentials, and machine-local outputs out
-of committed examples. See [docs/architecture/topology.md](docs/architecture/topology.md)
-for on-disk layout and role boundaries, and
-[docs/architecture.md](docs/architecture.md) for solver boundaries and package layout.
-
-## Datasets
-
-- Material definitions and templates in `siesta/` and `lammps/`
-- Input provenance must be identified in public examples (generated, archived, or illustrative)
-- No unpublished cluster datasets in the repo
+See [docs/architecture/topology.md](docs/architecture/topology.md) for on-disk
+layout and role boundaries, and [docs/architecture.md](docs/architecture.md)
+for solver boundaries and package layout.
 
 ## Docs map
 
