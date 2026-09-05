@@ -38,10 +38,10 @@ for material in materials:
     print(f"\nProcessing {material}...")
     
     # Create backup directory for this material
-    backup_dir = f"/global/home/users/meshal/STRUCT_IN_backups/{material}_{timestamp}"
+    backup_dir = f"{os.environ.get('QMATSIM_BACKUP_ROOT', './backups')}/{material}_{timestamp}"
     os.makedirs(backup_dir, exist_ok=True)
 
-    base_path = f"/global/home/users/meshal/SIESTA/materials/{material}/Monolayer/rectangular/1x10"
+    base_path = f"{os.environ.get('QMATSIM_WORKSPACE_ROOT', '.')}/siesta/materials/{material}/Monolayer/rectangular/1x10"
     
     # Backup and process for each strain
     for strain in range(21):
@@ -65,4 +65,4 @@ for material in materials:
             print(f"Copied files for {material} strain {strain}")
 
 print("\nAll materials processed!")
-print(f"Backups stored in /global/home/users/meshal/STRUCT_IN_backups/*_{timestamp}")
+print(f"Backups stored in {os.environ.get('QMATSIM_BACKUP_ROOT', './backups')}/*_{timestamp}")

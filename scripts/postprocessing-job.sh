@@ -22,7 +22,7 @@
 
 # Feedback for job
 #SBATCH --mail-type=FAIL,REQUEUE,END
-#SBATCH --mail-user=meshal@berkeley.edu
+# Optional notification address: configure --mail-user in a local submission wrapper.
 
 # Specify the job is eligible to requeue
 #SBATCH --requeue

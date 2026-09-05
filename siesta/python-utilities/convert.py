@@ -110,7 +110,7 @@ def process_structure(base_path: str, material: str, structure_type: str,
 
 def main():
     # Define paths and structures
-    base_path = "/global/home/users/meshal/SIESTA/materials"
+    base_path = os.environ.get("QMATSIM_WORKSPACE_ROOT", "./materials")
     materials = ['MoS2', 'MoSe2', 'WS2', 'WSe2']
     structure_types = ['Bulk', 'Monolayer']
     cell_types = ['primitive', 'rectangular']

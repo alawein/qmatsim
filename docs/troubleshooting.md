@@ -8,10 +8,17 @@ last-reviewed: 2026-03-31
 
 ## Common Issues
 
+### Verify the installed package without solvers
+
+Run `qmatsim verify-fixture`. It prints the documented deterministic JSON result and requires
+no SIESTA, LAMMPS, SLURM, or external workspace. If it fails after a wheel install, reinstall
+`QMatSim` and report the package version.
+
+
 ### Solver executable not found
 
-The bash scripts (`run-DFT.sh`, `run-MD.sh`) check for `siesta` and `lmp_mpi` on `PATH` before
-running. If either is missing the script exits with a descriptive error. Install the relevant
+Scientific workspace scripts (`run-DFT.sh`, `run-MD.sh`) check for `siesta` and `lmp_mpi` on `PATH` before
+running. They are not included in the thin wheel. If either is missing the script exits with a descriptive error. Install the relevant
 solver and verify it is accessible:
 
 ```bash
@@ -54,8 +61,9 @@ and that the Python environment has `numpy` and `matplotlib`.
 
 1. Run `python scripts/validate-structure.py` to confirm directory layout.
 2. Run `python -m qmatsim --help` to confirm the package is importable and the CLI is reachable.
-3. Check solver executables are on `PATH` (`which siesta`, `which lmp_mpi`).
-4. Run `pytest tests/` to verify CLI smoke tests pass without solvers.
+3. Run `qmatsim verify-fixture` to check the installed CLI without solvers.
+4. If using a separately prepared workspace, check solver executables are on `PATH` (`which siesta`, `which lmp_mpi`).
+5. Run `pytest tests/` to verify CLI smoke tests pass without solvers.
 
 ## Known Failure Modes
 
