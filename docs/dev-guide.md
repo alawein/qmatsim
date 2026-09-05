@@ -9,7 +9,7 @@ sla: none
 
 ## Project Overview
 
-QMatSim is a strain engineering framework for flat bands and lateral heterostructures in 2D materials. Based on research in Physical Review Materials (2025), it combines DFT (SIESTA) and MD (LAMMPS) to study strain effects in transition metal dichalcogenides, focusing on flat band emergence and hole localization in rippled structures.
+QMatSim distributes a thin CLI package for scientific workspaces that use SIESTA (DFT) and LAMMPS (MD). The wheel contains neither a scientific workspace nor solvers; use `qmatsim verify-fixture` to verify the package without either solver.
 
 ## Development Commands
 
@@ -35,7 +35,10 @@ pip install numpy matplotlib pytest
 
 ### Testing
 ```bash
-# Run all tests
+# Verify the installed thin package without solvers
+qmatsim verify-fixture
+
+# Run all tests (solver-free)
 pytest tests/
 
 # Run specific test files
@@ -71,12 +74,12 @@ qmatsim analyze --material MoS2 --structure 1x10_rectangular
 - `run-postprocessing.sh`: Analysis and data extraction
 - Template generation scripts for input files
 
-**SIESTA Integration (`siesta/`)**
+**SIESTA Integration (`siesta/`, source workspace only)**
 - `io_templates/`: SIESTA input file templates with variable substitution
 - `pseudopotentials/`: Element pseudopotentials organized by functional (GGA, LDA, GGA-SOC)
 - `materials/`: Structure-specific calculations organized by material/type/structure/strain
 
-**LAMMPS Integration (`lammps/`)**
+**LAMMPS Integration (`lammps/`, source workspace only)**
 - `data/`: Atomic structure files (.data format)
 - `in/`: LAMMPS input scripts for different simulation types
 - `potentials/`: Interatomic potential files
