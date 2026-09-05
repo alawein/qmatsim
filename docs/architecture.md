@@ -13,11 +13,11 @@ separately.
 
 ## Components
 
-The repository has six canonical surfaces:
+The repository has six canonical source surfaces. Only the first is distributed in the Python wheel:
 
 | Surface | Role |
 |---|---|
-| `qmatsim/` | Python package and CLI entrypoint (`__main__.py`, argparse subcommands) |
+| `qmatsim/` | Distributed Python package, CLI entrypoint, and solver-free verification fixture |
 | `scripts/` | Bash automation: `run-DFT.sh`, `run-MD.sh`, `run-postprocessing.sh`, SLURM helpers |
 | `siesta/` | DFT templates, structure files, and pseudopotentials (GGA, LDA, GGA-SOC) |
 | `lammps/` | MD input scripts, atomic data files, and interatomic potentials |
@@ -25,7 +25,7 @@ The repository has six canonical surfaces:
 | `tests/` | CLI smoke tests via subprocess |
 
 The CLI exposes three subcommands: `relax` (delegates to `run-DFT.sh`), `minimize` (delegates to
-`run-MD.sh`), and `analyze` (delegates to `run-postprocessing.sh`). Each script checks for the
+`run-MD.sh`), and `analyze` (delegates to `run-postprocessing.sh`). The scientific workflow scripts are source-workspace assets, not package data. Each checks for the
 required solver executable before running and exits with a descriptive message if it is missing.
 
 ## Data Flow
@@ -39,7 +39,7 @@ required solver executable before running and exits with a descriptive message i
 
 ## Dependencies
 
-Runtime dependencies (not bundled):
+Runtime dependencies for scientific workspace operations (not bundled):
 
 - **SIESTA 4.1+** -- DFT solver; the `siesta` executable must be on `PATH`.
 - **LAMMPS** -- MD solver; the `lmp_mpi` executable must be on `PATH`.
@@ -52,8 +52,9 @@ Development dependencies: `pytest`, `black`, `flake8`, `mypy`.
 - The package root is `qmatsim/`, not `src/qmatsim/`. See
   [architecture/STRUCTURE_DECISION.md](architecture/STRUCTURE_DECISION.md) for the explicit
   rationale.
-- SIESTA and LAMMPS are external; their executables and associated data files are not committed to
-  this repository.
+- The published wheel contains no scientific workspace assets. SIESTA/LAMMPS executables,
+  templates, pseudopotentials, material data, and scheduler settings are separate concerns; see
+  [THIN_PACKAGE_DECISION.md](architecture/THIN_PACKAGE_DECISION.md).
 - Private cluster paths, scheduler credentials, and machine-local outputs must not appear in
   committed examples.
 - The material-structure-strain directory hierarchy (`siesta/materials/{material}/{type}/{structure}/{strain}/`)

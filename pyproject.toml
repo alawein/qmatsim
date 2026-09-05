@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "QMatSim"
 version = "0.1.0"
-description = "Advanced strain engineering framework for discovering flat bands and lateral heterostructures in 2D quantum materials"
+description = "Thin Python CLI for QMatSim scientific workspaces"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
@@ -63,7 +63,7 @@ include = ["qmatsim*"]
 exclude = ["tests*"]
 
 [tool.setuptools.package-data]
-qmatsim = ["py.typed"]
+qmatsim = ["py.typed", "fixtures/*.json"]
 
 [tool.black]
 line-length = 88

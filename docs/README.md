@@ -7,6 +7,8 @@ decisions, and the operations notes for the simulation workflow.
 
 - [theory.md](theory.md) for the scientific context.
 - [api.md](api.md) for the command and package surface.
+- [architecture/topology.md](architecture/topology.md) for on-disk layout and role
+  boundaries.
 - [architecture.md](architecture.md) and `architecture/` for repository and
   backend boundaries.
 - [dev-guide.md](dev-guide.md) for development assumptions and workflow rules.

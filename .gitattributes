@@ -1,0 +1,12 @@
+# Enforce LF line endings so scripts stay POSIX-correct on Linux CI even when
+# authored/edited on Windows (prevents `set: pipefail: invalid option name`).
+* text=auto eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+
+# Binary assets: never line-ending-normalized.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.pdf binary

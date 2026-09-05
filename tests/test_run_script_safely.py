@@ -87,6 +87,22 @@ class TestRunScriptSafely:
                 run_script_safely(script_rel, [], "No-bash test")
         assert exc.value.code == 1
 
+    def test_cwd_restoration_target_exists_when_chdir_fails(self, tmp_path, monkeypatch):
+        """A failed first directory change still restores the captured directory."""
+        script_rel = "scripts/ok.sh"
+        script_abs = tmp_path / script_rel
+        script_abs.parent.mkdir(parents=True, exist_ok=True)
+        script_abs.write_text("")
+        monkeypatch.setattr("qmatsim.__main__.get_project_root", lambda: tmp_path)
+
+        original_cwd = os.getcwd()
+        with patch("qmatsim.__main__.os.chdir", side_effect=[OSError("blocked"), None]) as chdir:
+            with pytest.raises(SystemExit) as exc:
+                run_script_safely(script_rel, [], "CWD setup test")
+
+        assert exc.value.code == 1
+        assert chdir.call_args_list[-1].args == (original_cwd,)
+
     def test_cwd_restored_after_success(self, tmp_path, monkeypatch):
         """Working directory is restored even after successful execution."""
         script_rel = "scripts/ok.sh"
