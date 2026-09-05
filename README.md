@@ -5,7 +5,7 @@ Category:    lab
 Owner:       alawein
 Visibility:  public
 Purpose:     Thin CLI package for separately managed quantum-material workspaces.
-Next action: establish a versioned, license-reviewed scientific workspace bundle.
+Next action: continue
 
 ## Abstract
 
@@ -24,6 +24,8 @@ orchestrates their inputs, execution, and postprocessing.
 - Verification date: 2026-08-28
 - Scope: the published Python CLI under `qmatsim/`; repository workspace assets
   under `siesta/`, `lammps/`, and `scripts/` are not wheel contents
+- Release follow-up: establish a versioned, license-reviewed scientific workspace bundle
+  before making a paper-scale reproducibility claim
 
 ## Installation and solver-free verification
 
