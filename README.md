@@ -4,7 +4,7 @@ Status:      frozen
 Category:    lab
 Owner:       alawein
 Visibility:  public
-Purpose:     Quantum material simulation research workspace.
+Purpose:     Thin CLI package for separately managed quantum-material workspaces.
 Next action: continue
 
 ## Abstract
@@ -22,38 +22,55 @@ orchestrates their inputs, execution, and postprocessing.
 
 - Lifecycle: frozen
 - Verification date: 2026-08-28
-- Scope: Python package under `qmatsim/`, SIESTA/LAMMPS templates under
-  `siesta/` and `lammps/`, and cluster scripts under `scripts/`
+- Scope: the published Python CLI under `qmatsim/`; repository workspace assets
+  under `siesta/`, `lammps/`, and `scripts/` are not wheel contents
+- Release follow-up: establish a versioned, license-reviewed scientific workspace bundle
+  before making a paper-scale reproducibility claim
 
 ## Runtime requirements
 
-- Python 3.9+ with `pip install -e ".[dev]"`
-- External scientific dependencies: SIESTA (DFT) and LAMMPS (MD)
-- SLURM scheduler scripts in `scripts/` for cluster workflows
-- Validation: `python scripts/validate-structure.py`
+The published wheel has no solver runtime requirement for package verification. Scientific workspace operations have the external requirements described below.
 
 ## Reproducibility
 
-```bash
-python scripts/validate-structure.py
-python -m pytest tests/test_cli_basic.py tests/test_qmatsim_cli.py -q
-```
-
-Requires SIESTA and LAMMPS on PATH; not run in CI.
+Install the thin CLI package:
 
 ```bash
-qmatsim relax --material MoS2 --structure 1x10_rectangular
-qmatsim minimize --structure 1x10_rectangular --mode compress
-qmatsim analyze --material MoS2 --structure 1x10_rectangular
+pip install QMatSim
+qmatsim verify-fixture
 ```
 
-Committed examples exclude private cluster paths, scheduler credentials, and
-machine-local outputs.
+Expected output:
+
+```json
+{"fixture": "qmatsim-solver-free-v1", "schema_version": 1, "solvers_required": false, "status": "ok"}
+```
+
+This command is deterministic, bundled in the wheel, and does not require
+SIESTA, LAMMPS, SLURM, or a scientific workspace. The Python test suite is also
+solver-free:
+
+```bash
+python -m pytest
+```
+
+## Scientific workspaces and solvers
+
+`relax`, `minimize`, and `analyze` are workspace operations, not standalone
+wheel features. They require a separately obtained and documented scientific
+workspace plus locally installed SIESTA/LAMMPS. Cluster paths, scheduler
+settings, notification addresses, pseudopotential locations, and scratch roots
+must be supplied by local configuration; none are portable defaults.
+
+The repository directories `siesta/`, `lammps/`, and `scripts/` remain source
+workspace surfaces for maintainers. They are intentionally excluded from the
+published wheel. See [the thin-package decision](docs/architecture/THIN_PACKAGE_DECISION.md)
+for the boundary and follow-up required before a paper-scale reproduction claim.
 
 ## Datasets
 
-- Material definitions and templates in `siesta/` and `lammps/`
-- No unpublished cluster datasets in the repo
+No versioned, immutable scientific workspace/data bundle is published by this
+package. Do not treat the wheel as a data distribution or a solver installation.
 
 ## Architecture
 

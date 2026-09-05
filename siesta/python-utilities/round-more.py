@@ -38,10 +38,10 @@ for supercell in supercells:
     print(f"\nProcessing MoS2 {supercell}...")
     
     # Create backup directory for this supercell
-    backup_dir = f"/global/home/users/meshal/STRUCT_IN_backups/MoS2_{supercell}_{timestamp}"
+    backup_dir = f"{os.environ.get('QMATSIM_BACKUP_ROOT', './backups')}/MoS2_{supercell}_{timestamp}"
     os.makedirs(backup_dir, exist_ok=True)
 
-    base_path = f"/global/home/users/meshal/SIESTA/materials/MoS2/Monolayer/rectangular/{supercell}"
+    base_path = f"{os.environ.get('QMATSIM_WORKSPACE_ROOT', '.')}/siesta/materials/MoS2/Monolayer/rectangular/{supercell}"
     
     # Backup and process for each strain
     for strain in range(21):
@@ -65,4 +65,4 @@ for supercell in supercells:
             print(f"Copied files for {supercell} strain {strain}")
 
 print("\nAll supercells processed!")
-print(f"Backups stored in /global/home/users/meshal/STRUCT_IN_backups/*_{timestamp}")
+print(f"Backups stored in {os.environ.get('QMATSIM_BACKUP_ROOT', './backups')}/*_{timestamp}")
