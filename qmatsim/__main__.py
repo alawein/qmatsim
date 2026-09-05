@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import json
 import os
 import subprocess
 import sys
@@ -21,19 +22,19 @@ def validate_file_exists(file_path: Path, description: str) -> bool:
 def run_script_safely(script_path: str, args: list, description: str) -> None:
     project_root = get_project_root()
     script_full_path = project_root / script_path
-    
+
     if not validate_file_exists(script_full_path, f"{description} script"):
         sys.exit(1)
-    
+
     try:
         # Change to project root directory for script execution
         original_cwd = os.getcwd()
         os.chdir(project_root)
-        
+
         # Run the script
-        result = subprocess.run(["bash", script_path] + args, 
+        result = subprocess.run(["bash", script_path] + args,
                               capture_output=True, text=True, check=False)
-        
+
         if result.returncode != 0:
             print(f"❌ {description} failed with exit code {result.returncode}")
             if result.stderr:
@@ -45,7 +46,7 @@ def run_script_safely(script_path: str, args: list, description: str) -> None:
             print(f"✅ {description} completed successfully")
             if result.stdout:
                 print(result.stdout)
-                
+
     except FileNotFoundError:
         print("❌ Error: bash command not found. Please ensure bash is installed.")
         sys.exit(1)
@@ -65,9 +66,9 @@ def run_md(args):
     structure = args.structure
     mode = args.mode
     project_root = get_project_root()
-    
+
     print(f"⚛️ Starting MD simulation for {structure} (mode: {mode})")
-    
+
     # Validate data file exists
     data_file = project_root / f"lammps/data/{structure}.data"
     if not validate_file_exists(data_file, "LAMMPS data file"):
@@ -91,12 +92,12 @@ def run_md(args):
         for fname in required_files:
             if not (project_root / f"lammps/in/{fname}").exists():
                 missing.append(fname)
-        
+
         if missing:
             print(f"❌ Missing LAMMPS input files: {', '.join(missing)}")
             print("   Please ensure these files exist in lammps/in/")
             sys.exit(1)
-            
+
         run_script_safely("scripts/run-MD.sh", [structure], "MD simulation suite")
     else:
         print(f"❌ Unknown mode '{mode}'. Use '--mode compress' or '--mode all'.")
@@ -106,6 +107,18 @@ def run_md(args):
 def run_post(args):
     print(f"📊 Starting postprocessing analysis for {args.material} ({args.structure})")
     run_script_safely("scripts/run-postprocessing.sh", [args.material, args.structure], "Postprocessing analysis")
+
+# ---- Solver-free fixture ----
+def verify_fixture(args) -> None:
+    """Emit the versioned, solver-free fixture result used for installation checks."""
+    fixture_path = Path(__file__).parent / "fixtures" / "solver_free_expected.json"
+    try:
+        fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        print(f"Unable to read packaged verification fixture: {error}", file=sys.stderr)
+        sys.exit(1)
+    print(json.dumps(fixture, sort_keys=True))
+
 
 # ---- CLI Entrypoint ----
 def main():
@@ -119,40 +132,40 @@ def main():
 
 For more information, visit: https://github.com/alawein/qmatsim"""
     )
-    
+
     subparsers = parser.add_subparsers(
-        title="Available Commands", 
+        title="Available Commands",
         dest="command",
         help="QMatSim simulation workflows"
     )
 
     # DFT command
     p_dft = subparsers.add_parser(
-        "relax", 
+        "relax",
         help="Run SIESTA DFT simulation",
         description="Perform electronic structure calculations using SIESTA"
     )
-    p_dft.add_argument("--material", required=True, 
+    p_dft.add_argument("--material", required=True,
                       help="Material name (supported: MoS2, MoSe2, WS2, WSe2)")
-    p_dft.add_argument("--structure", required=True, 
+    p_dft.add_argument("--structure", required=True,
                       help="Structure type (e.g., 1x1_primitive, 1x10_rectangular)")
     p_dft.set_defaults(func=run_dft)
 
     # MD command
     p_md = subparsers.add_parser(
-        "minimize", 
+        "minimize",
         help="Run LAMMPS MD simulation",
         description="Perform molecular dynamics simulations using LAMMPS"
     )
-    p_md.add_argument("--structure", required=True, 
+    p_md.add_argument("--structure", required=True,
                      help="Structure name (must match a .data file in lammps/data/)")
-    p_md.add_argument("--mode", choices=["compress", "all"], default="all", 
+    p_md.add_argument("--mode", choices=["compress", "all"], default="all",
                      help="Simulation mode: 'compress' for Y-compression only, 'all' for full suite [default: all]")
     p_md.set_defaults(func=run_md)
 
     # Postprocessing command
     p_post = subparsers.add_parser(
-        "analyze", 
+        "analyze",
         help="Run DFT postprocessing analysis",
         description="Analyze DFT results and generate plots/data"
     )
@@ -161,6 +174,13 @@ For more information, visit: https://github.com/alawein/qmatsim"""
     p_post.add_argument("--structure", required=True,
                        help="Structure type (must match DFT calculation structure)")
     p_post.set_defaults(func=run_post)
+
+    p_fixture = subparsers.add_parser(
+        "verify-fixture",
+        help="Run the packaged solver-free verification fixture",
+        description="Emit the deterministic fixture result; SIESTA and LAMMPS are not required.",
+    )
+    p_fixture.set_defaults(func=verify_fixture)
 
     # Parse arguments and run
     args = parser.parse_args()

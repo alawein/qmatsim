@@ -6,27 +6,28 @@ last-reviewed: 2026-03-31
 
 # Deployment and Release -- qmatsim
 
-QMatSim is a research library and HPC workflow repository. It is not deployed as a running
-service and has no production environment. The relevant "deployment" context is local
-installation on a workstation or HPC cluster so that `qmatsim`, SIESTA, and LAMMPS can be
-invoked together.
+QMatSim is a thin Python CLI package, not a deployed service or a bundled HPC
+workspace. The wheel is installable independently; scientific solver workflows require a
+separately managed workspace and local solver configuration.
 
-## Local Installation
+## Package installation and verification
 
 ```bash
-git clone https://github.com/alawein/qmatsim.git
-cd qmatsim
-pip install -e ".[dev]"
-python scripts/validate-structure.py
-python -m qmatsim --help
+pip install QMatSim
+qmatsim verify-fixture
 ```
 
-`validate-structure.py` confirms that the expected directory layout is intact before any
-simulation work begins.
+The expected single-line JSON result is documented in the README. This command and
+`pytest` do not require SIESTA, LAMMPS, SLURM, or external workspace data.
+
+For source contributors, use `pip install -e ".[dev]"` and run
+`python scripts/validate-structure.py` before tests.
 
 ## External Solver Requirements
 
-SIESTA and LAMMPS must be installed separately and their executables placed on `PATH`:
+The scientific workspace and SIESTA/LAMMPS must be obtained and configured separately.
+The package wheel does not include templates, pseudopotentials, data, or executables. When
+running a prepared workspace, place the solver executables on `PATH`:
 
 - `siesta` (version 4.1 or later)
 - `lmp_mpi`
@@ -36,15 +37,16 @@ descriptive message if either is missing.
 
 ## HPC / SLURM
 
-Workflow automation scripts in `scripts/` include SLURM submission helpers. Cluster-specific
-paths, partition names, and resource limits must be set in local configuration files that are
-not committed to this repository.
+Workspace automation scripts include SLURM submission helpers. Set cluster-specific paths,
+partitions, resource limits, mail settings, `QMATSIM_SCRATCH_ROOT`,
+`QMATSIM_WORKSPACE_ROOT`, and `QMATSIM_PSEUDOPOTENTIAL_ROOT` in local configuration or
+submission wrappers; do not commit them.
 
 ## Release Strategy
 
-There is no published package release at this time. The repository is consumed by cloning and
-installing in editable mode (`pip install -e .`). Version information is tracked in
-`pyproject.toml`.
+The Python package is intentionally thin. A future scientific release must publish a
+separately versioned, checksummed, license-reviewed workspace/data bundle and document its
+solver/container versions before claiming scientific reproducibility.
 
 ## Rollback
 

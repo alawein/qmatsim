@@ -47,7 +47,7 @@ class TestMovePathConstruction:
 
     @pytest.fixture
     def base_path(self):
-        return "/global/home/users/meshal/SIESTA/materials"
+        return "./materials"
 
     @pytest.mark.parametrize(
         "material,supercell,strain",
