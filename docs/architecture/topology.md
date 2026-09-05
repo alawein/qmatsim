@@ -7,15 +7,15 @@ last-reviewed: 2026-06-29
 
 **Archetype:** `python-research-package` (per [alawein fleet canon](https://github.com/alawein/alawein/blob/main/docs/governance/repo-topology-canon.md))
 
-Rooted package layout (not `src/<pkg>/`). SIESTA and LAMMPS assets are first-class
-workflow surfaces alongside the Python orchestration layer. See
+Rooted package layout (not `src/<pkg>/`). The Python package is distributed as a thin CLI;
+SIESTA and LAMMPS assets remain separately managed source-workspace surfaces. See
 [STRUCTURE_DECISION.md](STRUCTURE_DECISION.md).
 
 ## On-disk tree
 
 ```text
 qmatsim/
-├── qmatsim/                 # rooted Python package and CLI entrypoint
+├── qmatsim/                 # distributed Python package, CLI, verification fixture
 │   ├── __init__.py
 │   └── __main__.py          # python -m qmatsim
 ├── scripts/                 # DFT/MD runners, SLURM, validation
@@ -41,7 +41,7 @@ qmatsim/
 
 | Path | Role | Must not |
 |------|------|----------|
-| `qmatsim/` | Python orchestration and CLI | Replace SIESTA or LAMMPS solvers |
+| `qmatsim/` | Distributed Python orchestration, CLI, fixture | Bundle scientific workspaces or replace solvers |
 | `scripts/` | Shell automation, cluster jobs, validation | Become a second Python package root |
 | `siesta/` | DFT inputs, materials, pseudopotentials | Hold private cluster credentials |
 | `lammps/` | MD inputs, potentials, structure data | Mix unrelated Python modules |

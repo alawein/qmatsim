@@ -2,7 +2,7 @@ import os
 
 def move_poscar_files():
    # Define paths and structures
-   base_path = "/global/home/users/meshal/SIESTA/materials"
+   base_path = os.environ.get("QMATSIM_WORKSPACE_ROOT", "./materials")
    materials = ['MoS2', 'MoSe2', 'WS2', 'WSe2']
    supercells = {
        'MoS2': ['1x10', '1x20', '1x30'],
