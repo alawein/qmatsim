@@ -26,9 +26,11 @@ def run_script_safely(script_path: str, args: list, description: str) -> None:
     if not validate_file_exists(script_full_path, f"{description} script"):
         sys.exit(1)
 
+    # Capture this before entering the protected directory-changing block so the
+    # finally clause always has a defined restoration target.
+    original_cwd = os.getcwd()
     try:
         # Change to project root directory for script execution
-        original_cwd = os.getcwd()
         os.chdir(project_root)
 
         # Run the script
