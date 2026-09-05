@@ -27,7 +27,11 @@ orchestrates their inputs, execution, and postprocessing.
 - Release follow-up: establish a versioned, license-reviewed scientific workspace bundle
   before making a paper-scale reproducibility claim
 
-## Installation and solver-free verification
+## Runtime requirements
+
+The published wheel has no solver runtime requirement for package verification. Scientific workspace operations have the external requirements described below.
+
+## Reproducibility
 
 Install the thin CLI package:
 
