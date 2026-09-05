@@ -23,7 +23,7 @@
 
 # Feedback for job 
 #SBATCH --mail-type=FAIL,REQUEUE,END
-#SBATCH --mail-user=meshal@berkeley.edu
+# Optional notification address: configure --mail-user in a local submission wrapper.
 
 # Specify the job is eligible to requeue
 #SBATCH --requeue
@@ -52,14 +52,14 @@ RelaxCond=T
 StaticCond=T
 BandsCond=T
 LDOSCond=T
-homedir=~/SIESTA/materials/MoS2/Monolayer/rectangular/1x10/13/
+homedir="${QMATSIM_WORKSPACE_ROOT:?Set QMATSIM_WORKSPACE_ROOT}/siesta/materials/MoS2/Monolayer/rectangular/1x10/13/"
 
 if [ "$SOCCond" = "T" ]; then
-    scratchFolder=/global/scratch/users/meshal/SIESTA/MoS2/Monolayer/GGA-SOC/rectangular/1x10/13/
-    potdir=~/siestapot/GGA-SOC/
+    scratchFolder="${QMATSIM_SCRATCH_ROOT:?Set QMATSIM_SCRATCH_ROOT}/MoS2/Monolayer/GGA-SOC/rectangular/1x10/13/"
+    potdir="${QMATSIM_PSEUDOPOTENTIAL_ROOT:?Set QMATSIM_PSEUDOPOTENTIAL_ROOT}/GGA-SOC/"
 else
-    scratchFolder=/global/scratch/users/meshal/SIESTA/MoS2/Monolayer/GGA/rectangular/1x10/13/
-    potdir=~/siestapot/GGA/
+    scratchFolder="${QMATSIM_SCRATCH_ROOT:?Set QMATSIM_SCRATCH_ROOT}/MoS2/Monolayer/GGA/rectangular/1x10/13/"
+    potdir="${QMATSIM_PSEUDOPOTENTIAL_ROOT:?Set QMATSIM_PSEUDOPOTENTIAL_ROOT}/GGA/"
 fi
 
 # Scratch folder structure

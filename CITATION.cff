@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "QMatSim"
+abstract: "Thin Python CLI for QMatSim scientific workspaces."
+authors:
+  - family-names: "Alawein"
+    given-names: "Meshal"
+    email: "contact@meshal.ai"
+repository-code: "https://github.com/alawein/qmatsim"
+keywords:
+  - "strain engineering"
+  - "quantum materials"
+  - "2D materials"
+  - "DFT"
+  - "SIESTA"
+  - "molecular dynamics"
+  - "LAMMPS"
+license: MIT
+version: "0.1.0"
+date-released: "2026-08-28"
+# No preferred paper citation is listed: the repository does not contain enough
+# bibliographic evidence to complete one without inventing metadata.

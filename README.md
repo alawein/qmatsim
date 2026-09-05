@@ -1,35 +1,78 @@
 # QMatSim
 
 Status:      frozen
-Category:    research
+Category:    lab
 Owner:       alawein
 Visibility:  public
-Purpose:     Quantum material simulation research workspace.
+Purpose:     Thin CLI package for separately managed quantum-material workspaces.
 Next action: continue
 
 ## Abstract
 
-QMatSim is a strain-engineering workflow for 2D quantum materials built around
-two explicit computational surfaces: SIESTA for DFT and LAMMPS for molecular
-dynamics. The Python package is the orchestration layer; it does not replace the
-underlying solvers. Public polish should emphasize reproducibility, solver
-requirements, data provenance, and example outputs rather than abstracting away
-the DFT/MD tooling.
+QMatSim orchestrates strain-engineering simulations for 2D quantum materials: a
+Python CLI drives SIESTA for DFT and LAMMPS for molecular dynamics from one set
+of commands. It is for researchers who already run DFT/MD pipelines by hand and
+want a single reproducible entry point instead of separate per-project scripts
+for each solver.
+
+It does not implement DFT or MD itself; it depends on SIESTA and LAMMPS and
+orchestrates their inputs, execution, and postprocessing.
 
 ## Status
 
-- Lifecycle: `frozen`
-- Category: `research`
-- Owner: `alawein`
-- Visibility: `public`
-- Next action: `continue`
+- Lifecycle: frozen
+- Verification date: 2026-08-28
+- Scope: the published Python CLI under `qmatsim/`; repository workspace assets
+  under `siesta/`, `lammps/`, and `scripts/` are not wheel contents
+- Release follow-up: establish a versioned, license-reviewed scientific workspace bundle
+  before making a paper-scale reproducibility claim
 
 ## Runtime requirements
 
-- Python 3.x with `pip install -e ".[dev]"`
-- External scientific dependencies: SIESTA (DFT) and LAMMPS (MD)
-- SLURM scheduler scripts in `scripts/` for cluster workflows
-- Validation: `python scripts/validate-structure.py`
+The published wheel has no solver runtime requirement for package verification. Scientific workspace operations have the external requirements described below.
+
+## Reproducibility
+
+Install the thin CLI package:
+
+```bash
+pip install QMatSim
+qmatsim verify-fixture
+```
+
+Expected output:
+
+```json
+{"fixture": "qmatsim-solver-free-v1", "schema_version": 1, "solvers_required": false, "status": "ok"}
+```
+
+This command is deterministic, bundled in the wheel, and does not require
+SIESTA, LAMMPS, SLURM, or a scientific workspace. The Python test suite is also
+solver-free:
+
+```bash
+python -m pytest
+```
+
+## Scientific workspaces and solvers
+
+`relax`, `minimize`, and `analyze` are workspace operations, not standalone
+wheel features. They require a separately obtained and documented scientific
+workspace plus locally installed SIESTA/LAMMPS. Cluster paths, scheduler
+settings, notification addresses, pseudopotential locations, and scratch roots
+must be supplied by local configuration; none are portable defaults.
+
+The repository directories `siesta/`, `lammps/`, and `scripts/` remain source
+workspace surfaces for maintainers. They are intentionally excluded from the
+published wheel. See [the thin-package decision](docs/architecture/THIN_PACKAGE_DECISION.md)
+for the boundary and follow-up required before a paper-scale reproduction claim.
+
+## Datasets
+
+No versioned, immutable scientific workspace/data bundle is published by this
+package. Do not treat the wheel as a data distribution or a solver installation.
+
+## Architecture
 
 ```text
 qmatsim/
@@ -46,28 +89,9 @@ qmatsim/
 └── pyproject.toml
 ```
 
-## Reproducibility
-
-```bash
-pip install -e ".[dev]"
-python scripts/validate-structure.py
-python -m qmatsim --help
-qmatsim relax --material MoS2 --structure 1x10_rectangular
-qmatsim minimize --structure 1x10_rectangular --mode compress
-qmatsim analyze --material MoS2 --structure 1x10_rectangular
-python -m pytest -s tests/test_cli_basic.py tests/test_qmatsim_cli.py
-```
-
-Keep private cluster paths, scheduler credentials, and machine-local outputs out
-of committed examples. See [docs/architecture/topology.md](docs/architecture/topology.md)
-for on-disk layout and role boundaries, and
-[docs/architecture.md](docs/architecture.md) for solver boundaries and package layout.
-
-## Datasets
-
-- Material definitions and templates in `siesta/` and `lammps/`
-- Input provenance must be identified in public examples (generated, archived, or illustrative)
-- No unpublished cluster datasets in the repo
+See [docs/architecture/topology.md](docs/architecture/topology.md) for on-disk
+layout and role boundaries, and [docs/architecture.md](docs/architecture.md)
+for solver boundaries and package layout.
 
 ## Docs map
 
